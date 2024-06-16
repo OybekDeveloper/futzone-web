@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
 import { Route, Routes, useLocation } from "react-router-dom";
@@ -28,6 +28,14 @@ const NotFound = lazy(() => import("./interface/not-found/not-found"));
 
 const App = () => {
   const { pathname } = useLocation();
+  useEffect(() => {
+    const body = document.body;
+    if (pathname === "/futzone-tv") {
+      body.style.overflow = "hidden";
+    } else {
+      body.style.overflow = "visible";
+    }
+  }, [pathname]);
   return (
     <div className="app">
       <Navbar />

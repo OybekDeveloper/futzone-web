@@ -7,7 +7,7 @@ const Footer = () => {
   const { pathname } = useLocation();
   return (
     <div
-      className={`bg-black w-full ${
+      className={`bg-black w-full mt-[12px] ${
         pathname === "/login" || pathname === "/register" ? "hidden" : ""
       }`}
     >

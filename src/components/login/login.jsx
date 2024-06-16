@@ -1,9 +1,9 @@
 import React from "react";
 import { backgroundlogin } from "../../images";
 
-const Loginn = () => {
+const Login = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 h-full">
+    <div className="grid grid-cols-1 md:grid-cols-2 h-full mx-[12px]">
       <div className="w-full flex flex-col mx-auto justify-center items-center max-w-[300px] gap-[12px]">
         <h1 className="clamp2 font-bold text-white">Tizimga kirish</h1>
         <p className="text-thin text-center">
@@ -44,4 +44,4 @@ const Loginn = () => {
   );
 };
 
-export default Loginn;
+export default Login;

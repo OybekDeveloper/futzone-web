@@ -22,10 +22,7 @@ const Navbar = () => {
       body.style.overflow = "visible";
       app.classList.remove("blur-effect");
     }
-  if(pathname==='/futzone-tv'){
-    body.style.overflow = "hidden";
-  }
-  }, [isOpen,pathname]);
+  }, [isOpen]);
 
   return (
     <div
