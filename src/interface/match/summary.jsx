@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { yellowcard, yellowredcard } from "../../images";
+import { redcard, yellowcard, yellowredcard } from "../../images";
 import ProgressBar from "@ramonak/react-progress-bar";
 
 const Summary = () => {
@@ -34,11 +34,20 @@ const Summary = () => {
                         <p className="text-white clamp3 font-bold">
                           {item?.home_fault}
                         </p>
-                        <img
-                          className="w-[30px] h-[30px]"
-                          src={yellowcard}
-                          alt="goal"
-                        />
+                        {item?.card === "yellow card" && (
+                          <img
+                            className="w-[30px] h-[30px]"
+                            src={yellowcard}
+                            alt="goal"
+                          />
+                        )}
+                        {item?.card === "red card" && (
+                          <img
+                            className="w-[30px] h-[30px]"
+                            src={redcard}
+                            alt="goal"
+                          />
+                        )}
                         <p className="text-white font-[500]">{item?.time}'</p>
                       </>
                     )}
@@ -49,11 +58,20 @@ const Summary = () => {
                     {item?.away_fault && (
                       <>
                         <p className=" text-white font-[500]">{item?.time}'</p>
-                        <img
-                          className="w-[30px] h-[30px]"
-                          src={yellowredcard}
-                          alt="goal"
-                        />
+                        {item?.card === "yellow card" && (
+                          <img
+                            className="w-[30px] h-[30px]"
+                            src={yellowcard}
+                            alt="goal"
+                          />
+                        )}
+                        {item?.card === "red card" && (
+                          <img
+                            className="w-[30px] h-[30px]"
+                            src={redcard}
+                            alt="goal"
+                          />
+                        )}
                         <p className="clamp3 text-white font-bold">
                           {item?.away_fault}
                         </p>

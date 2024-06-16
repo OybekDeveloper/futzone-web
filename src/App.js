@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Loginn from "./components/login/login";
 import Register from "./components/register/register";
 import Loader from "./components/loader/loader";
@@ -27,10 +27,18 @@ const FutzoneTV = lazy(() => import("./interface/futzone-tv/futzone-tv"));
 const NotFound = lazy(() => import("./interface/not-found/not-found"));
 
 const App = () => {
+  const { pathname } = useLocation();
   return (
-    <div className="app max-sm:w-full w-11/12 md:w-11/12 lg:max-w-[80%] mx-auto">
+    <div className="app">
       <Navbar />
-      <div id="app" className="h-full">
+      <div
+        id="app"
+        className={`${
+          pathname === "/login" || pathname === "/register"
+            ? "w-screen h-screen"
+            : "max-sm:w-full w-11/12 md:w-11/12 lg:max-w-[80%] mx-auto"
+        } `}
+      >
         <Routes>
           {/* Home pages */}
           <Route
@@ -172,7 +180,7 @@ const App = () => {
                     </div>
                   }
                 >
-                  <Comments  />
+                  <Comments />
                 </Suspense>
               }
             />
