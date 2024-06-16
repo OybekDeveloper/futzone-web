@@ -1,0 +1,22 @@
+.date-picker {
+    display: flex;
+    justify-content: space-around;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+  }
+  
+  .date-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .date-item.today {
+    background-color: #ff5722;
+    color: #fff;
+  }
+      
