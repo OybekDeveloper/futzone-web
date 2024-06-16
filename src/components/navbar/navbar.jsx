@@ -22,7 +22,10 @@ const Navbar = () => {
       body.style.overflow = "visible";
       app.classList.remove("blur-effect");
     }
-  }, [isOpen]);
+  if(pathname==='/futzone-tv'){
+    body.style.overflow = "hidden";
+  }
+  }, [isOpen,pathname]);
 
   return (
     <div
@@ -102,7 +105,7 @@ const Navbar = () => {
               ))}
               <button
                 onClick={() => navigate("/login")}
-                className="whitespace-nowrap border-[#333333] border-[1px] cursor-pointer px-4 py-2 rounded-lg  md:block text-white"
+                className="whitespace-nowrap border-[#fff] border-[1px] cursor-pointer px-4 py-2 rounded-lg  md:block text-white"
               >
                 <h1>Kirish</h1>
               </button>
