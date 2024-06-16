@@ -7,7 +7,7 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div className="w-full max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[100px] grid grid-cols-1 space-x-reverse md:grid-cols-5 gap-3">
+    <div className="w-full max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[88px] grid grid-cols-1 space-x-reverse md:grid-cols-5 gap-3">
       <Matches />
       <News />
     </div>

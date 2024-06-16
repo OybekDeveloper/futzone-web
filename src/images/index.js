@@ -15,6 +15,7 @@ import yellowredcard from "./yellow-red-card.svg";
 import foul from "./foul.svg";
 import cup from "./cup.svg";
 import station from "./station.svg";
+import menusvg from './menu-alt-1-svgrepo-com.svg'
 export {
   logo,
   rigtharrow,
@@ -33,4 +34,5 @@ export {
   foul,
   cup,
   station,
+  menusvg
 };

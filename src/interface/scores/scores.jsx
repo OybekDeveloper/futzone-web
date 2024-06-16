@@ -155,8 +155,8 @@ const Scores = () => {
                 </h1>
                 <p className="text-[14px] font-[400]">{league?.country_name}</p>
               </div>
-              <div className="w-full flex justify-end items-center">
-                <img src={rigtharrow} alt="Right arrow" />
+              <div className="w-[50px] flex justify-end items-center">
+                <img className="w-full" src={rigtharrow} alt="Right arrow" />
               </div>
             </NavLink>
             <ul className="px-4 py-2 flex flex-col justify-center items-start bg-[#1b1c21] text-white rounded-xl mt-2">
@@ -167,10 +167,10 @@ const Scores = () => {
                     navigate(`/match/${match.match_id}/${league.league_id}`);
                   }}
                   key={match.match_id}
-                  className="relative w-full grid grid-cols-4 py-2 border-b border-gray-700 last:border-b-0 cursor-pointer gap-3"
+                  className="relative w-full grid grid-cols-3 sm:grid-cols-4 py-2 border-b border-gray-700 last:border-b-0 cursor-pointer gap-3"
                 >
                   <div className="flex justify-start items-center gap-2">
-                    {match?.match_live == "1" ? (
+                    {/* {match?.match_live == "1" ? (
                       <div className="px-2 py-1 text-[14px] font-bold bg-red-500 rounded-[12px] text-center ">
                         live
                       </div>
@@ -186,7 +186,7 @@ const Scores = () => {
                           </div>
                         )}
                       </>
-                    )}
+                    )} */}
 
                     {match?.team_home_badge ? (
                       <img
@@ -201,7 +201,7 @@ const Scores = () => {
                         </span>
                       </div>
                     )}
-                    <span className="font-medium">
+                    <span className="font-medium text-start">
                       {match?.match_hometeam_name}
                     </span>
                   </div>
@@ -214,14 +214,14 @@ const Scores = () => {
                       </span>
                     ) : (
                       <span className="bg-gray-700 px-2 py-1 rounded-md text-sm">
-                        {match?.match_status
-                          ? match?.match_status
-                          : match?.match_time}
+                         {match?.match_status
+                        ? match?.match_status
+                        : match?.match_time}
                       </span>
                     )}
                   </div>
                   <div className="flex justify-end items-center gap-2">
-                    <span className="font-medium">
+                    <span className="font-medium  text-end">
                       {match?.match_awayteam_name}
                     </span>
                     {match?.team_away_badge ? (
@@ -238,7 +238,7 @@ const Scores = () => {
                       </div>
                     )}
                   </div>
-                  <div className="flex justify-start items-center gap-3">
+                  <div className="max-sm:hidden flex justify-start items-center gap-3">
                     <span
                       className={`${
                         match?.match_status ? "bg-[#323337]" : "bg-[#067647]"

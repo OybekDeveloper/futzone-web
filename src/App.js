@@ -30,7 +30,7 @@ const App = () => {
   return (
     <div className="app max-sm:w-full w-11/12 md:w-11/12 lg:max-w-[80%] mx-auto">
       <Navbar />
-      <div className="h-full">
+      <div id="app" className="h-full">
         <Routes>
           {/* Home pages */}
           <Route

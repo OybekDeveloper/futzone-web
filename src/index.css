@@ -1,18 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Os  wald:wght@200..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Os  wald:wght@200..700&display=swap");
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
-html{
+html {
   scroll-behavior: smooth;
 }
 body {
-  background:#212227;
+  background: #212227;
   font-family: "Robot,sans-serif";
 }
 
@@ -49,4 +49,7 @@ body {
 }
 .clamp4Half {
   font-size: clamp(0.7rem, 3vw, 0.9rem);
+}
+.blur-effect {
+  filter: blur(10px);
 }
