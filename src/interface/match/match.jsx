@@ -81,18 +81,17 @@ const Match = () => {
       } catch (error) {
         console.log(error);
       } finally {
-        navigate(`/match/${match_id}/${league_id}/summary`)
         setLoading(false);
       }
     };
     fetchData();
-
+    navigate(`/match/${match_id}/${league_id}/summary`);
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("match", JSON.stringify(match));
-  }, [match_id,league_id,match]);
+  }, [match_id, league_id, match]);
 
   console.log(match);
 
