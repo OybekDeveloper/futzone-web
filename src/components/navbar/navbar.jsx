@@ -30,7 +30,7 @@ const Navbar = () => {
         pathname === "/login" || pathname === "/register" ? "hidden" : ""
       } fixed bg-gray-700 top-0 left-0 w-full h-[88px] z-[999] border-gray-700 shadow-md`}
     >
-      <div className="max-sm:w-full w-11/12 md:w-11/12 lg:max-w-[80%] mx-auto h-full flex justify-between items-center">
+      <div className="w-11/12 md:w-11/12 lg:max-w-[80%] mx-auto h-full flex justify-between items-center">
         <NavLink
           to="/"
           className="cursor-pointer h-full flex items-center gap-2"

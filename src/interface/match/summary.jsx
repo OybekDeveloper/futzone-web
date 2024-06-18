@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { redcard, yellowcard, yellowredcard } from "../../images";
+import { emptyclub, redcard, yellowcard } from "../../images";
 import ProgressBar from "@ramonak/react-progress-bar";
+import Loader from "../../components/loader/loader";
 
-const Summary = () => {
-  const [match, setMatch] = useState();
-  useEffect(() => {
-    const matchs = JSON.parse(localStorage.getItem("match"));
-    setMatch(matchs);
-  }, []);
-
+const Summary = ({ match }) => {
+  if (!match) {
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <Loader />
+      </div>
+    );
+  }
   return (
     <main className="flex flex-col justify-start items-start gap-[12px]">
       <section className="bg-[#333333] p-4 sm:rounded-[12px] w-full h-full">
@@ -16,10 +17,18 @@ const Summary = () => {
         <div className="w-full h-[1px] bg-thin my-[20px]"></div>
         <section className="w-full flex justify-between">
           <div className="w-[100px] h-[100px]">
-            <img src={match?.team_home_badge} alt="" />
+            <img
+              src={match?.team_home_badge ? match.team_home_badge : emptyclub}
+              alt="Home Team Badge"
+              onError={(e) => (e.target.src = emptyclub)}
+            />
           </div>
           <div className="w-[100px] h-[100px]">
-            <img src={match?.team_away_badge} alt="" />
+            <img
+              src={match?.team_away_badge ? match.team_away_badge : emptyclub}
+              alt="Home Team Badge"
+              onError={(e) => (e.target.src = emptyclub)}
+            />
           </div>
         </section>
         <section className="mt-[20px]">
@@ -90,10 +99,18 @@ const Summary = () => {
         <div className="w-full h-[1px] bg-thin my-[20px]"></div>
         <div className="w-full flex justify-between">
           <div className="w-[100px] h-[100px]">
-            <img src={match?.team_home_badge} alt="Home Team Badge" />
+            <img
+              src={match?.team_home_badge ? match.team_home_badge : emptyclub}
+              alt="Home Team Badge"
+              onError={(e) => (e.target.src = emptyclub)}
+            />
           </div>
           <div className="w-[100px] h-[100px]">
-            <img src={match?.team_away_badge} alt="Away Team Badge" />
+            <img
+              src={match?.team_away_badge ? match.team_away_badge : emptyclub}
+              alt="Away Team Badge"
+              onError={(e) => (e.target.src = emptyclub)}
+            />
           </div>
         </div>
         <div className="flex flex-col gap-5 w-full">

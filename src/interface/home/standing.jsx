@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { ApiServer } from "../../components/api.services";
-import { APL, bundesliga, laliga, logo, rigtharrow } from "../../images";
+import {
+  APL,
+  bundesliga,
+  emptyclub,
+  laliga,
+  logo,
+  rigtharrow,
+} from "../../images";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Standing = () => {
+  const navigate = useNavigate();
   const leagues = [
     {
       id: 1,
@@ -48,7 +57,8 @@ const Standing = () => {
     const structured = standingData.map((data, idx) => {
       return {
         league_name: leagues[idx].league_name,
-        league_logo: leagues[idx].logo, // Assuming league_logo is available in the first item
+        league_logo: leagues[idx].logo,
+        league_id: leagues[idx].league_id, // Assuming league_logo is available in the first item
         standing: data.slice(0, 7), // Get the top 10 standings
       };
     });
@@ -62,7 +72,10 @@ const Standing = () => {
       <section className="grid grid-cols-1 gap-2 w-full h-full ">
         {structuredData.map((league, idx) => (
           <div key={idx} className="p-4 text-white rounded-lg">
-            <div className="flex items-center justify-between mb-4">
+            <NavLink
+              to={`/leagues/${league.league_id}`}
+              className="flex items-center justify-between mb-4"
+            >
               <div className="flex justify-start items-center">
                 <img
                   src={league.league_logo}
@@ -77,7 +90,7 @@ const Standing = () => {
                 <h1>Barchasini o'qish</h1>
                 <img src={rigtharrow} alt="" />
               </div>
-            </div>
+            </NavLink>
             <table className="flex flex-col w-full gap-2">
               <thead>
                 <tr className="px-[24px] w-full grid grid-cols-7">
@@ -102,8 +115,11 @@ const Standing = () => {
                         <div className="w-[50px] h-[50px]">
                           <img
                             className="w-[50px] h-[50px] object-contain"
-                            src={team?.team_badge}
-                            alt=""
+                            alt="logo"
+                            src={
+                              team?.team_badge ? team?.team_badge : emptyclub
+                            }
+                            onError={(e) => (e.target.src = emptyclub)}
                           />
                         </div>
                         <p>{team?.team_name}</p>
@@ -123,5 +139,4 @@ const Standing = () => {
     </main>
   );
 };
-
 export default Standing;

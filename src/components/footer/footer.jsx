@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <div
       className={`bg-black w-full mt-[12px] ${
-        pathname === "/login" || pathname === "/register" ? "hidden" : ""
+        pathname === "/login" || pathname === "/register" || pathname==="/futzone-tv" ? "hidden" : ""
       }`}
     >
       <div className="max-sm:w-full w-11/12 md:w-11/12 lg:max-w-[80%] mx-auto h-full flex justify-center items-center py-[24px] flex-col gap-5">

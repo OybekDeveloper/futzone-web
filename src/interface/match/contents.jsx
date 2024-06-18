@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import Loader from "../../components/loader/loader";
 
-const Contents = () => {
-  const [match, setMatch] = useState();
-  useEffect(() => {
-    const matchs = JSON.parse(localStorage.getItem("match"));
-    setMatch(matchs);
-  }, []);
+const Contents = ({ match }) => {
+  if (!match) {
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <Loader />
+      </div>
+    );
+  }
   return (
     <main className="flex flex-col gap-[16px]">
       <section className="bg-[#333333] p-4 sm:rounded-[12px] w-full h-full">

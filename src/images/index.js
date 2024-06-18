@@ -3,6 +3,12 @@ import rigtharrow from "./right-arrow..svg";
 import laliga from "./LaLiga_logo_2023.svg.png";
 import bundesliga from "./Bundesliga_logo_(2017).svg.png";
 import APL from "./Image.svg";
+import uzbSupper from "./darkicon.png";
+import mls from "./MLS.png";
+import rusAPL from "./Russian Premier League.png";
+import saudiLeagues from "./Saudi Pro League.png";
+import seriaA from "./Serie A.png";
+import league1 from "./Ligue 1_l.png";
 import phoneback from "./Group 4.png";
 import timelogo from "./time-svg.svg";
 import goalsvg from "./goal.svg";
@@ -15,8 +21,9 @@ import yellowredcard from "./yellow-red-card.svg";
 import foul from "./foul.svg";
 import cup from "./cup.svg";
 import station from "./station.svg";
-import menusvg from './menu-alt-1-svgrepo-com.svg'
-import backgroundlogin from './background-login.jpg'
+import menusvg from "./menu-alt-1-svgrepo-com.svg";
+import backgroundlogin from "./background-login.jpg";
+import emptyclub from "./football-club.png";
 export {
   logo,
   rigtharrow,
@@ -36,5 +43,12 @@ export {
   cup,
   station,
   menusvg,
-  backgroundlogin
+  backgroundlogin,
+  emptyclub,
+  mls,
+  uzbSupper,
+  rusAPL,
+  saudiLeagues,
+  seriaA,
+  league1,
 };

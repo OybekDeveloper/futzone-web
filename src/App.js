@@ -15,7 +15,7 @@ const Summary = lazy(() => import("./interface/match/summary"));
 const Contents = lazy(() => import("./interface/match/contents"));
 const Comments = lazy(() => import("./interface/match/comments"));
 //leagues
-const League = lazy(() => import("./interface/home/league"));
+const League = lazy(() => import("./interface/leagues/league"));
 const LastMatch = lazy(() => import("./interface/home/last-match"));
 const ComingMatch = lazy(() => import("./interface/home/coming-match"));
 //live
@@ -135,67 +135,10 @@ const App = () => {
                 <Match />
               </Suspense>
             }
-          >
-            <Route
-              path="summary"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="w-full flex justify-center items-center h-screen">
-                      <Loader />
-                    </div>
-                  }
-                >
-                  <Summary />
-                </Suspense>
-              }
-            />
-            <Route
-              path="key-events"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="w-full flex justify-center items-center h-screen">
-                      <Loader />
-                    </div>
-                  }
-                >
-                  <KeyEvents />
-                </Suspense>
-              }
-            />
-            <Route
-              path="contents"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="w-full flex justify-center items-center h-screen">
-                      <Loader />
-                    </div>
-                  }
-                >
-                  <Contents />
-                </Suspense>
-              }
-            />
-            <Route
-              path="comments"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="w-full flex justify-center items-center h-screen">
-                      <Loader />
-                    </div>
-                  }
-                >
-                  <Comments />
-                </Suspense>
-              }
-            />
-          </Route>
+          />
           {/* League pages */}
           <Route
-            path="/league/:league_id"
+            path="/leagues/:league_id"
             element={
               <Suspense
                 fallback={

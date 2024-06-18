@@ -2,41 +2,27 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { ApiServer } from "../../components/api.services";
 import { useSelector } from "react-redux";
-import { assissvg, goalsvg } from "../../images";
+import { assissvg, emptyclub, goalsvg } from "../../images";
 import Loader from "../../components/loader/loader";
 import { motion } from "framer-motion";
+import Summary from "./summary";
+import Contents from "./contents";
+import Comments from "./comments";
+import { matchEventsData } from "../../components/data";
 const Match = () => {
-  const [match, setMatch] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState(false);
-  const { leagueData } = useSelector((state) => state.event);
   const { match_id, league_id } = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const [match, setMatch] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState(1);
+  const { leagueData } = useSelector((state) => state.event);
   console.log(leagueData);
 
-  const matchEvents = [
-    {
-      id: 1,
-      title: "Asosiy",
-      link: `/match/${match_id}/${league_id}/summary`,
-    },
-    {
-      id: 2,
-      title: "Tarkiblar",
-      link: `/match/${match_id}/${league_id}/contents`,
-    },
-    {
-      id: 3,
-      title: "Comment",
-      link: `/match/${match_id}/${league_id}/comments`,
-    },
-  ];
-
-  const handleActiveTab = (active) => {
-    navigate(active.link);
-    setActiveTab(active.id);
-  };
+    const handleActiveTab = (active) => {
+      setActiveTab(active.id);
+    };
 
   const getCurrentDateWith12HoursAdded = () => {
     const now = new Date();
@@ -62,6 +48,19 @@ const Match = () => {
     return date.toLocaleDateString("en-GB", options);
   };
 
+  const contentMatchPage = (page) => {
+    switch (page) {
+      case 1:
+        return <Summary match={match} />;
+      case 2:
+        return <Contents match={match} />;
+      case 3:
+        return <Comments match={match} />;
+      default:
+        return navigate(`/match/${match_id}/${league_id}`);
+    }
+  };
+
   useEffect(() => {
     const { newDate, currentDate } = getCurrentDateWith12HoursAdded();
     const fetchData = async () => {
@@ -85,7 +84,6 @@ const Match = () => {
       }
     };
     fetchData();
-    navigate(`/match/${match_id}/${league_id}/summary`);
     window.scrollTo(0, 0);
   }, []);
 
@@ -93,7 +91,7 @@ const Match = () => {
     localStorage.setItem("match", JSON.stringify(match));
   }, [match_id, league_id, match]);
 
-  console.log(match);
+    console.log(match);
 
   if (loading) {
     return (
@@ -113,14 +111,15 @@ const Match = () => {
         </h1>
         <div className="w-full grid grid-cols-3 gap-4">
           <div className="flex max-md:flex-col-reverse max-md:justify-between justify-end items-center gap-3">
-            <h1 className="text-white font-[700] clamp2">
+            <h1 className="text-white font-[700] clamp3">
               {match?.match_hometeam_name}
             </h1>
             <div className="w-[60px] md:w-[100px] h-[60px] md:h-[100px]">
               <img
                 className="w-full h-full object-contain"
-                src={match?.team_home_badge}
-                alt=""
+                src={match?.team_home_badge ? match.team_home_badge : emptyclub}
+                alt="Home Team Badge"
+                onError={(e) => (e.target.src = emptyclub)}
               />
             </div>
           </div>
@@ -141,11 +140,11 @@ const Match = () => {
             <div className="w-[60px] md:w-[100px] h-[60px] md:h-[70px]">
               <img
                 className="w-full h-full object-contain"
-                src={match?.team_away_badge}
+                src={match?.team_away_badge ? match.team_away_badge : emptyclub}
                 alt=""
               />
             </div>
-            <h1 className="text-white font-[700] clamp2">
+            <h1 className="text-white font-[700] clamp3">
               {match?.match_awayteam_name}
             </h1>
           </div>
@@ -282,14 +281,14 @@ const Match = () => {
       </section>
       <section className="flex flex-col justify-start items-start gap-[14px]">
         <div className="px-[16px] w-full flex items-center gap-[20px] ">
-          {matchEvents.map((item, idx) => (
+          {matchEventsData.map((item, idx) => (
             <button
               onClick={() => handleActiveTab(item)}
               key={idx}
               className={`text-white rounded-[6px] cursor-pointer relative py-[8px] flex justify-end items-end gap-[px]`}
             >
               <h1 className="font-bold clamp3 relative z-10">{item.title}</h1>
-              {pathname === item.link && (
+              {activeTab === item.id && (
                 <motion.div
                   layoutId="active-pill"
                   className="h-[5px] absolute inset-0 bg-[#7F00FF] mt-[40px] mx-auto"
@@ -298,9 +297,7 @@ const Match = () => {
             </button>
           ))}
         </div>
-        <div className="w-full h-full">
-          <Outlet />
-        </div>
+        <div className="w-full h-full">{contentMatchPage(activeTab)}</div>
       </section>
     </main>
   );

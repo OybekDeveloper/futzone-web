@@ -164,7 +164,9 @@ const Scores = () => {
                 <li
                   onClick={() => {
                     dispatch(selectLeagueData(league));
-                    navigate(`/match/${match.match_id}/${league.league_id}`);
+                    navigate(
+                      `/match/${match.match_id}/${league.league_id}`
+                    );
                   }}
                   key={match.match_id}
                   className="relative w-full grid grid-cols-3 sm:grid-cols-4 py-2 border-b border-gray-700 last:border-b-0 cursor-pointer gap-3"
@@ -214,9 +216,9 @@ const Scores = () => {
                       </span>
                     ) : (
                       <span className="bg-gray-700 px-2 py-1 rounded-md text-sm">
-                         {match?.match_status
-                        ? match?.match_status
-                        : match?.match_time}
+                        {match?.match_status
+                          ? match?.match_status
+                          : match?.match_time}
                       </span>
                     )}
                   </div>

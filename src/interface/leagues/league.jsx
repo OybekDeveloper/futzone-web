@@ -1,35 +1,60 @@
 import React, { useEffect, useState } from "react";
-import { leaguesData } from "../../components/data";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { rigtharrow, timelogo } from "../../images";
-import { NavLink, useNavigate } from "react-router-dom";
-
-const Leagues = () => {
+import Standing from "./standing";
+import TopScore from "./top-score";
+import { leagueEventsData } from "../../components/data";
+import { motion } from "framer-motion";
+const League = () => {
+  const { league_id } = useParams();
   const navigate = useNavigate();
-  const [loading ,setLoading]=useState(true)
+  const [activeTab, setActiveTab] = useState(1);
+
+  const handleActiveTab = (active) => {
+    setActiveTab(active.id);
+  };
+
+  const contentMatchPage = (page) => {
+    switch (page) {
+      case 1:
+        return <Standing league_id={league_id} />;
+      case 2:
+        return <TopScore league_id={league_id} />;
+
+      default:
+        return navigate(`/leagues/${league_id}`);
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
-    <main className="w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[88px] grid grid-cols-1 space-x-reverse md:grid-cols-5 gap-3">
-      <section className="col-span-3 w-full h">
-        <h1 className="font-bold clamp3 text-thin">Ligalar</h1>
-        <div className="w-full h-[2px] bg-border mt-2"></div>
-        <div className="flex flex-col gap-4 mt-2">
-          {leaguesData.map((item, idx) => (
-            <div
-              onClick={() => navigate(`/leagues/${item.id}`)}
-              key={idx}
-              className="cursor-pointer flex justify-start items-center gap-4 w-full h-full"
-            >
-              <div className="w-[40px] h-[40px]">
-                <img src={item.flag} className="w-[40px] h-[40px]" alt="" />
-              </div>
-              <h1 className="text-thin font-bold clamp3">{item.name}</h1>
-            </div>
-          ))}
+    <main className="w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[100px] grid grid-cols-1 md:grid-cols-3 gap-3">
+      <section className="col-span-2">
+        <div className="flex flex-col justify-start items-start gap-[14px]">
+          <div className="w-full flex items-center gap-[20px] ">
+            {leagueEventsData.map((item, idx) => (
+              <button
+                onClick={() => handleActiveTab(item)}
+                key={idx}
+                className={`text-white rounded-[6px] cursor-pointer relative py-[8px] flex justify-end items-end gap-[px]`}
+              >
+                <h1 className="font-bold clamp3 relative z-10">{item.title}</h1>
+                {activeTab === item.id && (
+                  <motion.div
+                    layoutId="active-pill"
+                    className="h-[5px] absolute inset-0 bg-[#7F00FF] mt-[40px] mx-auto"
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+          <div className="w-full h-full">{contentMatchPage(activeTab)}</div>
         </div>
       </section>
-      <section className="col-span-2 mb-[20px]">
+      <section className="col-span-1 mb-[20px]">
         <h1 className="clamp3 text-thin font-bold">So'ngi yangiliklar</h1>
         <div className="w-full h-[2px] bg-border mt-2"></div>
         <div className="flex flex-col gap-5  my-[20px]">
@@ -76,7 +101,8 @@ const Leagues = () => {
     </main>
   );
 };
-export default Leagues;
+
+export default League;
 
 const LikeSVG = (color) => {
   if (color === "red") {

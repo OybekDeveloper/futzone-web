@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ApiServer } from "../../components/api.services";
 import { SoccerLeagues } from "../../components/data";
-import { rigtharrow } from "../../images";
+import { emptyclub, rigtharrow } from "../../images";
 import Standing from "./standing";
 import Swapper from "./swapper-news";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -113,7 +113,7 @@ const Matches = () => {
 
   if (loading) {
     return (
-      <div className="col-span-3 w-full h-full flex justify-center items-center">
+      <div className="col-span-3 w-full h-screen flex justify-center items-center">
         <Loader />
       </div>
     );
@@ -136,7 +136,7 @@ const Matches = () => {
         {leagueData?.map((league) => (
           <div key={league.league_id} className="mb-4">
             <NavLink
-              to={`/league/${league.league_id}}`}
+              to={`/leagues/${league.league_id}`}
               className="w-full flex justify-start items-center gap-2 cursor-pointer px-4 py-3 rounded-xl text-white"
             >
               <div className="w-[50px] h-[50px] flex-shrink-0">
@@ -169,7 +169,9 @@ const Matches = () => {
                 <li
                   onClick={() => {
                     dispatch(selectLeagueData(league));
-                    navigate(`/match/${match.match_id}/${league.league_id}`);
+                    navigate(
+                      `/match/${match.match_id}/${league.league_id}`
+                    );
                   }}
                   key={match.match_id}
                   className="relative w-full grid grid-cols-3 sm:grid-cols-4 py-2 border-b border-gray-700 last:border-b-0 cursor-pointer gap-3"
@@ -196,8 +198,13 @@ const Matches = () => {
                     {match?.team_home_badge ? (
                       <img
                         className="w-[30px] h-[30px] object-contain"
-                        src={match?.team_home_badge}
+                        src={
+                          match?.team_home_badge
+                            ? match?.team_home_badge
+                            : emptyclub
+                        }
                         alt={`${match?.match_hometeam_name} logo`}
+                        onError={(e) => (e.target.src = emptyclub)}
                       />
                     ) : (
                       <div className="w-[30px] h-[30px] bg-gray-700 flex justify-center items-center rounded-md">
@@ -219,9 +226,9 @@ const Matches = () => {
                       </span>
                     ) : (
                       <span className="bg-gray-700 px-2 py-1 rounded-md text-sm">
-                         {match?.match_status
-                        ? match?.match_status
-                        : match?.match_time}
+                        {match?.match_status
+                          ? match?.match_status
+                          : match?.match_time}
                       </span>
                     )}
                   </div>
@@ -232,8 +239,13 @@ const Matches = () => {
                     {match?.team_away_badge ? (
                       <img
                         className="w-[30px] h-[30px] object-contain"
-                        src={match?.team_away_badge}
                         alt={`${match?.match_awayteam_name} logo`}
+                        src={
+                          match?.team_away_badge
+                            ? match?.team_away_badge
+                            : emptyclub
+                        }
+                        onError={(e) => (e.target.src = emptyclub)}
                       />
                     ) : (
                       <div className="w-[30px] h-[30px] bg-gray-700 flex justify-center items-center rounded-md">
