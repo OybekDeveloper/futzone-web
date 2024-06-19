@@ -51,7 +51,7 @@ const Standing = ({ league_id }) => {
       <section className="grid grid-cols-1 gap-2 w-full h-full ">
         <table className="flex flex-col w-full gap-2 text-white">
           <thead>
-            <tr className="py-[12px] w-full grid grid-cols-7">
+            <tr className="px-[12px] py-[12px] w-full grid grid-cols-7">
               <th className="w-full text-start col-span-3 clamp4">
                 Jamoa nomi
               </th>

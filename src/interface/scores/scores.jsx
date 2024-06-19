@@ -8,6 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { ApiServer } from "../../components/api.services";
 import { selectLeagueData } from "../../reducer/redux";
 import { rigtharrow } from "../../images";
+import { europe } from "../../images/leagues";
 
 const Scores = () => {
   const [leagueData, setLeagueData] = useState([]);
@@ -124,7 +125,7 @@ const Scores = () => {
   }
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[100px]">
+    <div className="w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[100px]">
       <section>
         <h1 className="clamp3 font-bold text-white mt-[24px]">O'yinlar</h1>
         <div className="w-full h-[2px] bg-border my-[20px]"></div>
@@ -139,6 +140,12 @@ const Scores = () => {
                   <img
                     className="w-full h-full object-contain rounded-md"
                     src={league?.country_logo}
+                    alt={`${league?.country_name} logo`}
+                  />
+                ) : +league.league_id === 1 ? (
+                  <img
+                    className="w-full h-full  rounded-md"
+                    src={europe}
                     alt={`${league?.country_name} logo`}
                   />
                 ) : (
@@ -164,9 +171,7 @@ const Scores = () => {
                 <li
                   onClick={() => {
                     dispatch(selectLeagueData(league));
-                    navigate(
-                      `/match/${match.match_id}/${league.league_id}`
-                    );
+                    navigate(`/match/${match.match_id}/${league.league_id}`);
                   }}
                   key={match.match_id}
                   className="relative w-full grid grid-cols-3 sm:grid-cols-4 py-2 border-b border-gray-700 last:border-b-0 cursor-pointer gap-3"

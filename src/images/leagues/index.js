@@ -7,5 +7,6 @@ import russian from "./russia.png";
 import saudi from "./saudi-arabia.png";
 import spain from "./spain.png";
 import uk from "./england.png";
+import europe from './pngwing.com.png'
 
-export { usa, uzb, france, german, italy, russian, saudi, spain, uk };
+export { usa, uzb, france, german, italy, russian, saudi, spain, uk,europe };

@@ -55,11 +55,12 @@ const Standing = () => {
 
   useEffect(() => {
     const structured = standingData.map((data, idx) => {
+      console.log(data, "data");
       return {
         league_name: leagues[idx].league_name,
         league_logo: leagues[idx].logo,
         league_id: leagues[idx].league_id, // Assuming league_logo is available in the first item
-        standing: data.slice(0, 7), // Get the top 10 standings
+        standing: data.length > 0 ? data?.slice(0, 7) : [], // Get the top 10 standings
       };
     });
 

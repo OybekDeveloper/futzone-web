@@ -22,6 +22,7 @@ import {
 } from "../images/leagues";
 
 export const SoccerLeagues = [
+  { id: 30, liga_id: "1", name: "euro" },
   { id: 1, liga_id: "336", name: "uzSuperliga" },
   { id: 2, liga_id: "603", name: "uzCup" },
   { id: 3, liga_id: "657", name: "uzSuperCup" },
@@ -51,7 +52,6 @@ export const SoccerLeagues = [
   { id: 27, liga_id: "22", name: "afcWorldCupQu" },
   { id: 28, liga_id: "19", name: "fifaClubWorldCup" },
   { id: 29, liga_id: "646", name: "arabClubsChampionsCup" },
-  { id: 30, liga_id: "1", name: "euro" },
   { id: 31, liga_id: "152", name: "englishPL" },
   { id: 32, liga_id: "146", name: "englishFA" },
   { id: 33, liga_id: "302", name: "laliga" },

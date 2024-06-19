@@ -8,6 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Loader from "../../components/loader/loader";
 import { useDispatch } from "react-redux";
 import { selectLeagueData } from "../../reducer/redux";
+import { europe } from "../../images/leagues";
 
 const Matches = () => {
   const [leagueData, setLeagueData] = useState([]);
@@ -106,7 +107,7 @@ const Matches = () => {
       const organizedData = organizeLeagueMatches(data);
       setLeagueData(organizedData);
       setLoading(false);
-      console.log(organizedData);
+      console.log(organizedData, "matches");
     };
     fetchData();
   }, []);
@@ -146,6 +147,12 @@ const Matches = () => {
                     src={league?.country_logo}
                     alt={`${league?.country_name} logo`}
                   />
+                ) : +league.league_id === 1 ? (
+                  <img
+                    className="w-full h-full  rounded-md"
+                    src={europe}
+                    alt={`${league?.country_name} logo`}
+                  />
                 ) : (
                   <div className="w-full h-full bg-gray-700 flex justify-center items-center rounded-md text-[24px]">
                     <span className="text-white font-bold">
@@ -154,6 +161,7 @@ const Matches = () => {
                   </div>
                 )}
               </div>
+
               <div className="text-thin w-full">
                 <h1 className="text-[16px] font-[600]">
                   {league?.league_name}
@@ -169,9 +177,7 @@ const Matches = () => {
                 <li
                   onClick={() => {
                     dispatch(selectLeagueData(league));
-                    navigate(
-                      `/match/${match.match_id}/${league.league_id}`
-                    );
+                    navigate(`/match/${match.match_id}/${league.league_id}`);
                   }}
                   key={match.match_id}
                   className="relative w-full grid grid-cols-3 sm:grid-cols-4 py-2 border-b border-gray-700 last:border-b-0 cursor-pointer gap-3"

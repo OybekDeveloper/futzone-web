@@ -6,12 +6,14 @@ import { BrowserRouter } from "react-router-dom";
 import "swiper/css";
 import { Provider } from "react-redux";
 import { store } from "./reducer/store";
+import { Toaster } from "react-hot-toast";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
         <App />
+        <Toaster />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>
