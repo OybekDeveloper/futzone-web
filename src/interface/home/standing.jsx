@@ -72,7 +72,7 @@ const Standing = () => {
     <main>
       <section className="grid grid-cols-1 gap-2 w-full h-full ">
         {structuredData.map((league, idx) => (
-          <div key={idx} className="p-4 text-white rounded-lg">
+          <div key={idx} className="text-white rounded-lg">
             <NavLink
               to={`/leagues/${league.league_id}`}
               className="flex items-center justify-between mb-4"

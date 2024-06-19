@@ -164,7 +164,7 @@ const Register = () => {
         </form>
         <div className="w-full flex justify-center items-center">
           <h1 className="clamp4 text-thin">
-            Sizda akkount allaqachon?{" "}
+            Sizda akkount allaqachon mavjudmi?{" "}
             <strong
               onClick={() => navigate("/login")}
               className="text-primary cursor-pointer"

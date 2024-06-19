@@ -31,7 +31,7 @@ export default function Swapper() {
       >
         {[1, 2, 3, 4].map((item, idx) => (
           <SwiperSlide key={idx}>
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full rounded-[12px] overflow-hidden m-3">
               <img
                 className="w-full h-full object-cover"
                 src="https://assets.goal.com/images/v3/blt5723a4dde5118eb4/Can%20England%20overcome%20Kane's%20curse_.jpg?auto=webp&format=pjpg&width=1200&quality=60"

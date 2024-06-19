@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 const   News = () => {
   return (
-    <div className="col-span-2 mb-[20px]">
+    <div className="col-span-2 mb-[20px] w-11/12 mx-auto">
       <h1 className="clamp3 text-thin font-bold">So'ngi yangiliklar</h1>
       <div className="w-full h-[2px] bg-border mt-2"></div>
       <div className="flex flex-col gap-5  my-[20px]">

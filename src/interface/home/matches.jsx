@@ -131,7 +131,7 @@ const Matches = () => {
         <Swapper />
       </section>
       {/* Matches */}
-      <section>
+      <section className="w-11/12 mx-auto">
         <h1 className="clamp3 font-bold text-white mt-[24px]">O'yinlar</h1>
         <div className="w-full h-[2px] bg-border my-[20px]"></div>
         {leagueData?.map((league) => (
@@ -282,7 +282,7 @@ const Matches = () => {
         ))}
       </section>
       {/* Turnir jadvali */}
-      <section>
+      <section className="w-11/12 mx-auto">
         <h1 className="clamp2 font-bold text-white">Turnir jadvali</h1>
         <div className="w-full h-[2px] bg-border my-[20px]"></div>
         <Standing />
