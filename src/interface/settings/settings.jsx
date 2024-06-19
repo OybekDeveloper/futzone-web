@@ -47,7 +47,6 @@ const Settings = () => {
               To'liq ismingiz
             </label>
             <input
-              placeholder="fullname , Telefon raqam"
               className="w-full bg-transparent border-[#646464] border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] focus:border-primary text-white transition-all ease-linear duration-[0.4]"
               type="text"
               value={profile?.fullname}
