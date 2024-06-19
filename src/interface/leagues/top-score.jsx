@@ -10,7 +10,6 @@ const TopScore = ({ league_id }) => {
     const fetchData = async () => {
       try {
         const res = await ApiServer.getTopScoreData(league_id);
-        console.log(res, "top score");
         if (res) {
           setTopScore(res);
           setLoading(false);

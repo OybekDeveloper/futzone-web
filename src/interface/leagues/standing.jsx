@@ -21,7 +21,6 @@ const Standing = ({ league_id }) => {
     const fetchData = async () => {
       try {
         const res = await ApiServer.getStandingData(league_id);
-        console.log(res);
         if (res) {
           setStandingData(res);
         }
@@ -36,7 +35,6 @@ const Standing = ({ league_id }) => {
     window.scrollTo(0, 0);
 
     const filterLeague = leaguesData.find((item) => item.id === league_id);
-    console.log(filterLeague);
   }, [league_id]);
   
   if (loading) {

@@ -24,6 +24,7 @@ import station from "./station.svg";
 import menusvg from "./menu-alt-1-svgrepo-com.svg";
 import backgroundlogin from "./background-login.jpg";
 import emptyclub from "./football-club.png";
+import userlogo from './user-logo.svg'
 export {
   logo,
   rigtharrow,
@@ -51,4 +52,5 @@ export {
   saudiLeagues,
   seriaA,
   league1,
+  userlogo
 };

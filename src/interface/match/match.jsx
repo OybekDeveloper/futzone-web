@@ -18,7 +18,6 @@ const Match = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(1);
   const { leagueData } = useSelector((state) => state.event);
-  console.log(leagueData);
 
     const handleActiveTab = (active) => {
       setActiveTab(active.id);
@@ -91,7 +90,6 @@ const Match = () => {
     localStorage.setItem("match", JSON.stringify(match));
   }, [match_id, league_id, match]);
 
-    console.log(match);
 
   if (loading) {
     return (

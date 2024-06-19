@@ -55,7 +55,6 @@ const Standing = () => {
 
   useEffect(() => {
     const structured = standingData.map((data, idx) => {
-      console.log(data, "data");
       return {
         league_name: leagues[idx].league_name,
         league_logo: leagues[idx].logo,
@@ -66,7 +65,6 @@ const Standing = () => {
 
     setStructuredData(structured);
   }, [standingData]);
-  console.log(standingData);
 
   return (
     <main>

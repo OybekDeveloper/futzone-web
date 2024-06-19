@@ -24,6 +24,9 @@ const LiveMatch = lazy(() => import("./interface/home/live-match"));
 const Scores = lazy(() => import("./interface/scores/scores"));
 const Leagues = lazy(() => import("./interface/leagues/leagues"));
 const FutzoneTV = lazy(() => import("./interface/futzone-tv/futzone-tv"));
+//settings
+const Settings = lazy(() => import("./interface/settings/settings"));
+//not-found
 const NotFound = lazy(() => import("./interface/not-found/not-found"));
 
 const App = () => {
@@ -178,6 +181,21 @@ const App = () => {
                 }
               >
                 <FutzoneTV />
+              </Suspense>
+            }
+          />
+          {/* Settings */}
+          <Route
+            path="/settings"
+            element={
+              <Suspense
+                fallback={
+                  <div className="w-full flex justify-center items-center h-screen">
+                    <Loader />
+                  </div>
+                }
+              >
+                <Settings />
               </Suspense>
             }
           />

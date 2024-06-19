@@ -3,8 +3,10 @@ import { logo, menusvg } from "../../images";
 import { navLinkData } from "../data";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import Profile from "../profile/profile";
 
 const Navbar = () => {
+  const token = localStorage.getItem("token");
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -23,7 +25,6 @@ const Navbar = () => {
       app.classList.remove("blur-effect");
     }
   }, [isOpen]);
-
   return (
     <div
       className={`${
@@ -56,21 +57,26 @@ const Navbar = () => {
           ))}
         </div>
         <div className="text-gray-800 flex gap-3 items-center">
-          <div className="hidden whitespace-nowrap border-border cursor-pointer px-4 py-2 border rounded-lg">
-            <h1 className="text-white">Leng</h1>
-          </div>
-          <button
-            onClick={() => navigate("/login")}
-            className="whitespace-nowrap border-border cursor-pointer px-4 py-2 border rounded-lg hidden md:block"
-          >
-            <h1 className="text-white">Kirish</h1>
-          </button>
-          <button
-            onClick={() => navigate("/register")}
-            className="whitespace-nowrap border-primary cursor-pointer px-4 py-2 border rounded-lg bg-primary text-white hidden md:block"
-          >
-            <h1 className="text-white">Ro'yxatdan o'tish</h1>
-          </button>
+          {token ? (
+            <div>
+              <Profile />
+            </div>
+          ) : (
+            <>
+              <button
+                onClick={() => navigate("/login")}
+                className="whitespace-nowrap shadow-white/10 border-white/5 border-[2px] cursor-pointer px-4 py-2 rounded-lg hidden md:block"
+              >
+                <h1 className="text-white">Kirish</h1>
+              </button>
+              <button
+                onClick={() => navigate("/register")}
+                className="whitespace-nowrap border-primary cursor-pointer px-4 py-2 border rounded-lg bg-primary text-white hidden md:block"
+              >
+                <h1 className="text-white">Ro'yxatdan o'tish</h1>
+              </button>
+            </>
+          )}
           <div className="md:hidden">
             <div
               className="w-[40px] h-[40px] cursor-pointer"
@@ -101,13 +107,19 @@ const Navbar = () => {
                 </motion.div>
               ))}
               <button
-                onClick={() => navigate("/login")}
-                className="whitespace-nowrap border-[#fff] border-[1px] cursor-pointer px-4 py-2 rounded-lg  md:block text-white"
+                onClick={() => {
+                  navigate("/login");
+                  setIsOpen(false);
+                }}
+                className="whitespace-nowrap shadow-white/10 border-white/5 border-[1px] cursor-pointer px-4 py-2 rounded-lg  md:block text-white"
               >
                 <h1>Kirish</h1>
               </button>
               <button
-                onClick={() => navigate("/register")}
+                onClick={() => {
+                  navigate("/register");
+                  setIsOpen(false);
+                }}
                 className="whitespace-nowrap border-primary cursor-pointer px-4 py-2 border rounded-lg bg-primary text-white  md:block"
               >
                 <h1>Ro'yxatdan o'tish</h1>

@@ -25,15 +25,15 @@ const Login = () => {
     e.preventDefault();
     const fetchData = async () => {
       const toastId = toast.loading("Tizimga kirilmoqda...");
-
       try {
         const res = await axios({
           method: "POST",
-          url: "https://sws-news.uz/api/v1/user/create",
+          url: "https://sws-news.uz/api/v1/user/login",
           data: formData,
         });
         if (res.data) {
           toast.success("Tizimga muvoffaqiyatli kirdingiz!", { id: toastId });
+          localStorage.setItem("token", res.data.token);
           navigate("/");
         }
       } catch (error) {
@@ -46,36 +46,6 @@ const Login = () => {
     fetchData();
   };
 
-  const handleInputChange = (e) => {
-    let inputValue = e.target.value.replace(/[^0-9]/g, "");
-    // Ensure the input doesn't exceed 12 digits
-    inputValue = inputValue.slice(0, 12);
-    const formattedValue = [];
-    for (let i = 0; i < inputValue.length; i++) {
-      if (i === 0) {
-        formattedValue.push("+");
-      }
-      if (i === 3) {
-        formattedValue.push(" (");
-      }
-      if (i === 5) {
-        formattedValue.push(") ");
-      }
-      if (i === 8 || i === 10) {
-        formattedValue.push(" ");
-      }
-      formattedValue.push(inputValue[i]);
-    }
-    const finalValue = formattedValue.join("");
-    setPhoneNumber(finalValue);
-  };
-
-  const handleInputFocus = () => {
-    if (!phoneNumber) {
-      setPhoneNumber("+998");
-    }
-  };
-
   useEffect(() => {
     setFormData((prevData) => ({
       ...prevData,
@@ -83,7 +53,6 @@ const Login = () => {
     }));
   }, [phoneNumber]);
 
-  console.log(formData);
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 h-full mx-[12px]">
       <div className="relative w-full flex flex-col mx-auto justify-center items-center max-w-[350px] gap-[12px]">
@@ -94,14 +63,20 @@ const Login = () => {
         <form action="" className="w-full flex flex-col gap-[12px]">
           <div className="flex flex-col gap-2">
             <label htmlFor="username" className="clamp4 text-thin font-bold">
-              Username
+              Login
             </label>
             <input
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  username: e.target.value,
+                  phone: e.target.value,
+                })
+              }
               value={formData.username}
+              placeholder="Username , Telefon raqam"
               className="w-full bg-transparent border-[#646464] border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] focus:border-primary text-white transition-all ease-linear duration-[0.4]"
               type="text"
-              name="username"
               id="username"
             />
           </div>
@@ -115,21 +90,8 @@ const Login = () => {
               className="w-full bg-transparent border-[#646464] border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] focus:border-primary text-white transition-all ease-linear duration-[0.4]"
               type="password"
               name="password"
+              placeholder="Parol"
               id="password"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="phone" className="clamp4 text-thin font-bold">
-              Telefon raqam
-            </label>
-            <input
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-              className="w-full bg-transparent border-[#646464] border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] focus:border-primary text-white transition-all ease-linear duration-[0.4]"
-              type="text"
-              value={phoneNumber}
-              name="phone"
-              id="phone"
             />
           </div>
           <button
@@ -139,7 +101,7 @@ const Login = () => {
             Kirish
           </button>
         </form>
-        <div className="w-full">
+        <div className="w-full flex justify-center items-center">
           <h1 className="clamp4 text-thin">
             Sizda akkount mavjud emasmi ?{" "}
             <strong

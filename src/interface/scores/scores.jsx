@@ -107,7 +107,6 @@ const Scores = () => {
       const organizedData = organizeLeagueMatches(data);
       setLeagueData(organizedData);
       setLoading(false);
-      console.log(organizedData);
     };
     fetchData();
   }, []);

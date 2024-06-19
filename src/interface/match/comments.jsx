@@ -1,7 +1,6 @@
 import React from "react";
 
 const Comments = ({ match }) => {
-  console.log("comments", match);
   return (
     <main className="flex flex-col gap-[16px]">
       <section className="bg-[#333333] p-4 sm:rounded-[12px] w-full h-full">

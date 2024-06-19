@@ -44,6 +44,7 @@ const Register = () => {
         });
         if (res.data) {
           toast.success("Tizimga muvoffaqiyatli kirdingiz!", { id: toastId });
+          localStorage.setItem("token", res.data.token);
           navigate("/");
         }
       } catch (error) {
@@ -93,7 +94,6 @@ const Register = () => {
     }));
   }, [phoneNumber]);
 
-  console.log(formData);
   return (
     <div className="grid md:grid-cols-2 grid-cols-1 h-full">
       <div className="relative w-10/12 flex flex-col mx-auto justify-center items-center md:max-w-[350px] gap-[12px]">
