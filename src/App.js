@@ -6,6 +6,7 @@ import Loginn from "./components/login/login";
 import Register from "./components/register/register";
 import Loader from "./components/loader/loader";
 import KeyEvents from "./interface/match/key-events";
+import Settings from "./interface/settings/settings";
 
 // Lazy load components
 const Home = lazy(() => import("./interface/home/home"));
@@ -24,8 +25,10 @@ const LiveMatch = lazy(() => import("./interface/home/live-match"));
 const Scores = lazy(() => import("./interface/scores/scores"));
 const Leagues = lazy(() => import("./interface/leagues/leagues"));
 const FutzoneTV = lazy(() => import("./interface/futzone-tv/futzone-tv"));
-//settings
-const Settings = lazy(() => import("./interface/settings/settings"));
+//liked news
+const LikedPostes = lazy(() => import("./interface/liked-postes/liked-postes"));
+//about news
+const AboutUs = lazy(() => import("./interface/about-us/about-us"));
 //not-found
 const NotFound = lazy(() => import("./interface/not-found/not-found"));
 
@@ -184,9 +187,9 @@ const App = () => {
               </Suspense>
             }
           />
-          {/* Settings */}
+          {/* Liked Postes pages */}
           <Route
-            path="/settings"
+            path="/liked"
             element={
               <Suspense
                 fallback={
@@ -195,7 +198,22 @@ const App = () => {
                   </div>
                 }
               >
-                <Settings />
+                <LikedPostes />
+              </Suspense>
+            }
+          />
+          {/* About Us pages */}
+          <Route
+            path="/about-us"
+            element={
+              <Suspense
+                fallback={
+                  <div className="w-full flex justify-center items-center h-screen">
+                    <Loader />
+                  </div>
+                }
+              >
+                <AboutUs />
               </Suspense>
             }
           />
@@ -214,6 +232,8 @@ const App = () => {
               </Suspense>
             }
           />
+          {/* Settings */}
+          <Route path="/settings" element={<Settings />} />
           {/* Authentication pages */}
           <Route path="/login" element={<Loginn />} />
           <Route path="/register" element={<Register />} />
