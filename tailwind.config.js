@@ -9,11 +9,13 @@ module.exports = {
 
       boxShadow: {
         custom: "0px 1px 2px 0px rgba(16, 24, 40, 0.05)",
+        border:"rgba(0, 0, 0, 0.1) 0px 4px 12px"
       },
       fontSize: {
         clamp: "clamp(1rem, 5vw, 4rem)",
       },
       colors: {
+        background:"#28282c",
         primary: "#7F00FF",
         secondary: "#B972FF",
         thin: "#91929E",

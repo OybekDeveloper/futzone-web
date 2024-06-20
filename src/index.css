@@ -13,6 +13,7 @@ html {
 }
 body {
   background: #212227;
+  /* background: #28282c; */
   font-family: "Robot,sans-serif";
 }
 
@@ -52,4 +53,8 @@ body {
 }
 .blur-effect {
   filter: blur(10px);
+}
+
+.dad{
+  color: #e43f3f;
 }

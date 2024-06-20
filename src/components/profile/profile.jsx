@@ -15,7 +15,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { userlogo } from "../../images";
+import { exit, userlogo } from "../../images";
 
 export default function Profile() {
   const [profile, setProfile] = useState({});
@@ -87,9 +87,9 @@ export default function Profile() {
                 onClick={handleLogout}
                 className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10"
               >
-                <Square2StackIcon className="size-4 fill-white/30" />
-                Chiqish
-                <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-[focus]:inline">
+                <img src={exit} alt="" />
+                <h1 className="text-red-500">Chiqish</h1>
+                <kbd className="ml-auto hidden font-sans text-xs text-red-400 group-data-[focus]:inline">
                   ⌘Exit
                 </kbd>
               </button>

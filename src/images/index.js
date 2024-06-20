@@ -25,6 +25,13 @@ import menusvg from "./menu-alt-1-svgrepo-com.svg";
 import backgroundlogin from "./background-login.jpg";
 import emptyclub from "./football-club.png";
 import userlogo from './user-logo.svg'
+import userlogosecondary from './user-logo-secondary.svg'
+import edit from './edit.svg'
+import like from './like.svg'
+import aboutus from './about-us.svg'
+import global from './global.svg'
+import exit from './exit.svg'
+
 export {
   logo,
   rigtharrow,
@@ -52,5 +59,11 @@ export {
   saudiLeagues,
   seriaA,
   league1,
-  userlogo
+  userlogo,
+  userlogosecondary,
+  edit,
+  like,
+  aboutus,
+  global,
+  exit,
 };
