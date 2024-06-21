@@ -50,6 +50,7 @@ export default function Profile() {
       fetchData();
     }
   }, [token]);
+  console.log(profile,"test")
   return (
     <div className="relative z-[999] ">
       <Menu>
@@ -62,7 +63,7 @@ export default function Profile() {
             <img
               className="w-full h-full"
               src={
-                profile.photo_url
+                profile.photo_url.includes("https")
                   ? `https://sws-news.uz/api/v1/files/${profile.photo_url}`
                   : userlogo
               }
