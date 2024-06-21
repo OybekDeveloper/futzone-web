@@ -14,6 +14,7 @@ import { GiWhistle } from "react-icons/gi";
 import { FaWindowClose } from "react-icons/fa";
 import { IoTimerOutline } from "react-icons/io5";
 import { MdOutlineTimer } from "react-icons/md";
+import { MdAccessTime } from "react-icons/md";
 
 const Matches = () => {
   const [leagueData, setLeagueData] = useState([]);
@@ -200,15 +201,25 @@ const Matches = () => {
                     navigate(`/match/${match.match_id}/${league.league_id}`);
                   }}
                   key={match.match_id}
-                  className="relative w-full grid grid-cols-3 sm:grid-cols-5 py-2 border-b border-gray-700 last:border-b-0 cursor-pointer gap-3"
+                  className="relative w-full grid grid-cols-3 py-2 border-b border-gray-700 last:border-b-0 cursor-pointer gap-3"
                 >
-                  <div className="w-full flex justify-end items-center gap-1 col-span-5 text-[14px]">
-                    <div>
-                      <FaCalendarAlt className="text-primary" />
+                  <div className="w-full flex justify-end items-center gap-2 col-span-3 text-[14px]">
+                    <div className="flex justify-start items-center gap-1">
+                      <div>
+                        <MdAccessTime  className="text-primary text-[16px]" />
+                      </div>
+                      <h1 className="text-thin font-bold clamp4">
+                        {addHoursToTime(match?.match_time, 3)}
+                      </h1>
                     </div>
-                    <h1 className="text-thin font-bold clamp4">
-                      {match?.match_date}
-                    </h1>
+                    <div className="flex justify-start items-center gap-1">
+                      <div>
+                        <FaCalendarAlt className="text-primary" />
+                      </div>
+                      <h1 className="text-thin font-bold clamp4">
+                        {match?.match_date}
+                      </h1>
+                    </div>
                   </div>
                   <div className="flex justify-start items-center gap-2">
                     {match?.team_home_badge ? (
@@ -233,7 +244,7 @@ const Matches = () => {
                       {match?.match_hometeam_name}
                     </span>
                   </div>
-                  <div className="sm:col-span-2 flex justify-center items-center text-center">
+                  <div className="flex justify-center items-center text-center">
                     <div>
                       {match?.match_hometeam_score &&
                       match?.match_awayteam_score ? (
@@ -266,13 +277,12 @@ const Matches = () => {
                         </div>
                       ) : (
                         <div className="flex justify-center items-center gap-1">
-                        <MdOutlineTimer  className="text-green-600 text-[12px]" />
-                        <h1 className="text-[12px] text-thin">
-                          {match?.match_status}'
-                        </h1>
-                      </div>
+                          <MdOutlineTimer className="text-green-600 text-[12px]" />
+                          <h1 className="text-[12px] text-thin">
+                            {match?.match_status}'
+                          </h1>
+                        </div>
                       )}
-                       
                     </div>
                   </div>
                   <div className="flex justify-end items-center gap-2">
@@ -297,15 +307,6 @@ const Matches = () => {
                         </span>
                       </div>
                     )}
-                  </div>
-                  <div className="max-sm:hidden flex justify-end items-center gap-3">
-                    <span
-                      className={`${
-                        match?.match_status ? "bg-[#323337]" : "bg-[#067647]"
-                      } text-sm  px-2 py-1 rounded-md`}
-                    >
-                      {addHoursToTime(match?.match_time, 3)}
-                    </span>
                   </div>
                 </li>
               ))}
