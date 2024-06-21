@@ -179,7 +179,6 @@ const Scores = () => {
                 <h1 className="text-[16px] font-[600]">
                   {league?.league_name}
                 </h1>
-                <p className="text-[14px] font-[400]">{league?.country_name}</p>
               </div>
               <div className="w-[50px] flex justify-end items-center">
                 <img className="w-full" src={rigtharrow} alt="Right arrow" />
