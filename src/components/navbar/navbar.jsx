@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { logo, menusvg } from "../../images";
+import { close, logo, menusvg } from "../../images";
 import { navLinkData } from "../data";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Profile from "../profile/profile";
+import { IoMdClose } from "react-icons/io";
 
 const Navbar = () => {
   const token = localStorage.getItem("token");
@@ -45,14 +46,20 @@ const Navbar = () => {
             Futzone
           </h1>
         </NavLink>
-        <div className="hidden md:flex text-gray-800 gap-4">
+        <div className="hidden md:flex text-gray-800 gap-8">
           {navLinkData.map((item, idx) => (
             <NavLink
               to={item.link}
-              className="whitespace-nowrap text-white cursor-pointer px-4 py-2 rounded-lg hover:text-primary transition-all duration-300"
+              className="relative whitespace-nowrap text-white cursor-pointer py-2 rounded-lg hover:text-primary transition-all duration-300"
               key={idx}
             >
               <h1>{item.title}</h1>
+              {pathname === item.link && (
+                <motion.div
+                  layoutId="active-pill"
+                  className="h-[5px] absolute inset-0 bg-[#7F00FF] mt-[32px] mx-auto"
+                />
+              )}
             </NavLink>
           ))}
         </div>
@@ -78,12 +85,22 @@ const Navbar = () => {
             </>
           )}
           <div className="md:hidden">
-            <div
-              className="w-[40px] h-[40px] cursor-pointer"
-              onClick={toggleMenu}
-            >
-              <img className="w-full h-full" src={menusvg} alt="Menu" />
-            </div>
+            {isOpen ? (
+              <div
+                className="w-[40px] h-[40px] cursor-pointer"
+                onClick={toggleMenu}
+              >
+                <IoMdClose size={40} className="text-primary" />
+              </div>
+            ) : (
+              <div
+                className="w-[40px] h-[40px] cursor-pointer"
+                onClick={toggleMenu}
+              >
+                <img className="w-full h-full" src={menusvg} alt="Menu" />
+              </div>
+            )}
+
             <motion.div
               initial={{ opacity: 0, x: "150%" }}
               animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : "100%" }}
@@ -111,7 +128,9 @@ const Navbar = () => {
                   navigate("/login");
                   setIsOpen(false);
                 }}
-                className="whitespace-nowrap shadow-white/10 border-white/5 border-[1px] cursor-pointer px-4 py-2 rounded-lg  md:block text-white"
+                className={`${
+                  token && "hidden"
+                } whitespace-nowrap shadow-white/10 border-white/5 border-[1px] cursor-pointer px-4 py-2 rounded-lg  md:block text-white`}
               >
                 <h1>Kirish</h1>
               </button>
@@ -120,7 +139,9 @@ const Navbar = () => {
                   navigate("/register");
                   setIsOpen(false);
                 }}
-                className="whitespace-nowrap border-primary cursor-pointer px-4 py-2 border rounded-lg bg-primary text-white  md:block"
+                className={`${
+                  token && "hidden"
+                } whitespace-nowrap border-primary cursor-pointer px-4 py-2 border rounded-lg bg-primary text-white  md:block`}
               >
                 <h1>Ro'yxatdan o'tish</h1>
               </button>

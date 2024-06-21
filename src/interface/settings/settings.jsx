@@ -13,7 +13,8 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import EditModal from "./edit-modal";
 import ExitModal from "./exit-modal";
 import Loader from "../../components/loader/loader";
-import './index.css'
+import { GoShield } from "react-icons/go";
+import "./index.css";
 const Settings = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -97,7 +98,10 @@ const Settings = () => {
             </div>
             {/* Like news */}
             <div className="bg-border w-full h-[1px]"></div>
-            <NavLink to={'/liked'} className="flex justify-between items-center cursor-pointer w-full">
+            <NavLink
+              to={"/liked"}
+              className="flex justify-between items-center cursor-pointer w-full"
+            >
               <div className="flex justify-start items-center gap-4">
                 <div className="w-[20px]">
                   <img className="w-full h-full" src={like} alt="" />
@@ -111,7 +115,10 @@ const Settings = () => {
             </NavLink>
             {/* about us */}
             <div className="bg-border w-full h-[1px]"></div>
-            <NavLink to={'/about-us'} className="flex justify-between items-center cursor-pointer w-full">
+            <NavLink
+              to={"/about-us"}
+              className="flex justify-between items-center cursor-pointer w-full"
+            >
               <div className="flex justify-start items-center gap-4">
                 <div className="w-[20px]">
                   <img className="w-full h-full" src={aboutus} alt="" />
@@ -137,7 +144,24 @@ const Settings = () => {
               </div>
               <MdKeyboardArrowRight className="text-thin text-[24px]" />
             </div>
-            {/* Edit */}
+            {/* Privacy Policy */}
+            <div className="bg-border w-full h-[1px]"></div>
+            <NavLink
+              to={"/privacy-policy"}
+              className="flex justify-between items-center cursor-pointer w-full"
+            >
+              <div className="flex justify-start items-center gap-4">
+                <div className="w-[20px]">
+                  <GoShield className="text-thin text-[20px]" />
+                </div>
+
+                <h1 className="text-thin clamp4 text-center font-bold">
+                  Maxfiylik & xavfsizlik
+                </h1>
+              </div>
+              <MdKeyboardArrowRight className="text-thin text-[24px]" />
+            </NavLink>
+            {/* exit */}
             <div className="bg-border w-full h-[1px]"></div>
             <div
               onClick={handleExitModal}

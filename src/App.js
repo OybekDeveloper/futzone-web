@@ -29,6 +29,10 @@ const FutzoneTV = lazy(() => import("./interface/futzone-tv/futzone-tv"));
 const LikedPostes = lazy(() => import("./interface/liked-postes/liked-postes"));
 //about news
 const AboutUs = lazy(() => import("./interface/about-us/about-us"));
+//privacy policy
+const PrivacyPolicy = lazy(() =>
+  import("./interface/privacy-policy/privacy-policy")
+);
 //not-found
 const NotFound = lazy(() => import("./interface/not-found/not-found"));
 
@@ -214,6 +218,20 @@ const App = () => {
                 }
               >
                 <AboutUs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/privacy-policy"
+            element={
+              <Suspense
+                fallback={
+                  <div className="w-full flex justify-center items-center h-screen">
+                    <Loader />
+                  </div>
+                }
+              >
+                <PrivacyPolicy />
               </Suspense>
             }
           />

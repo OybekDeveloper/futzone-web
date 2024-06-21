@@ -122,9 +122,9 @@ const Match = () => {
             </div>
           </div>
           <div className="text-white font-bold flex justify-center items-center clamp2 gap-2">
-            {!match.match_hometeam_score && !match.match_awayteam_score ? (
+            {!match?.match_hometeam_score && !match?.match_awayteam_score ? (
               <h1 className="clamp2 text-white font-bold">
-                {match.match_time}
+                {match?.match_time}
               </h1>
             ) : (
               <>
@@ -285,7 +285,7 @@ const Match = () => {
               key={idx}
               className={`text-white rounded-[6px] cursor-pointer relative py-[8px] flex justify-end items-end gap-[px]`}
             >
-              <h1 className="font-bold clamp3 relative z-10">{item.title}</h1>
+              <h1 className="font-bold clamp3 relative z-10">{item?.title}</h1>
               {activeTab === item.id && (
                 <motion.div
                   layoutId="active-pill"

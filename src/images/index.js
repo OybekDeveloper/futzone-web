@@ -31,6 +31,7 @@ import like from './like.svg'
 import aboutus from './about-us.svg'
 import global from './global.svg'
 import exit from './exit.svg'
+import close from './close.svg'
 
 export {
   logo,
@@ -66,4 +67,5 @@ export {
   aboutus,
   global,
   exit,
+  close
 };

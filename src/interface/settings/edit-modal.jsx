@@ -6,17 +6,21 @@ import {
   Transition,
   TransitionChild,
 } from "@headlessui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MdOutlinePhotoCamera } from "react-icons/md";
 import { userlogosecondary } from "../../images";
+import axios from "axios";
 
 export default function EditModal({ profile, isOpen, handleClose }) {
+  const fileInputRef = useRef(null);
+  const token = localStorage.getItem("token");
   const [formData, setFormData] = useState({
     fullname: "",
     username: "",
     phone: "",
     password: "",
   });
+  const [uploadPhoto, setUploadPhoto] = useState();
 
   useEffect(() => {
     if (profile) {
@@ -24,7 +28,9 @@ export default function EditModal({ profile, isOpen, handleClose }) {
         fullname: profile.fullname,
         username: profile.username,
         phone: profile.phone_number,
+        photo: profile.photo_url,
         password: profile.password,
+        club_badge:profile.club_badge
       });
     }
   }, [profile]);
@@ -51,7 +57,48 @@ export default function EditModal({ profile, isOpen, handleClose }) {
     }
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    const fetchData = async () => {
+      try {
+        await axios({
+          method: "POST",
+          url: "https://sws-news.uz/api/v1/user/update",
+          data: JSON.stringify(formData),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  };
+
+  const handleFileInputClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleUploadPhoto = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("photo", file);
+      const fetchData = async () => {
+        try {
+          await axios({
+            method: "POST",
+            url: "https://sws-news.uz/api/v1/files/upload",
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `${token}`,
+            },
+            data: formData,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }
+  };
 
   return (
     <Transition appear show={isOpen}>
@@ -59,7 +106,7 @@ export default function EditModal({ profile, isOpen, handleClose }) {
       <Dialog
         as="div"
         className="relative z-[100] focus:outline-none"
-        onClose={() => {}}
+        onClose={handleClose}
       >
         <div className="fixed inset-0 z-[100] w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
@@ -82,9 +129,19 @@ export default function EditModal({ profile, isOpen, handleClose }) {
                       }
                       alt=""
                     />
-                    <div className="edit-photo absolute w-full h-full bg-black/5 flex justify-center items-center">
-                      <MdOutlinePhotoCamera className=" text-thin text-[24px] " />
+                    <div
+                      onClick={handleFileInputClick}
+                      className="edit-photo absolute w-full h-full bg-black/5 flex justify-center items-center cursor-pointer"
+                    >
+                      <MdOutlinePhotoCamera className=" text-thin text-[24px]" />
                     </div>
+                    <input
+                      type="file"
+                      name="file"
+                      hidden
+                      ref={fileInputRef}
+                      onChange={handleUploadPhoto}
+                    />
                   </div>
                   <div className="flex flex-col gap-2">
                     <label
@@ -153,7 +210,7 @@ export default function EditModal({ profile, isOpen, handleClose }) {
                 </form>
                 <div className="mt-4 flex justify-end gap-4">
                   <Button
-                    className="inline-flex items-center gap-2 rounded-md bg-red-500 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                    className="inline-flex items-center gap-2 rounded-md bg-red-600 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-red-500 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                     onClick={handleCancel}
                   >
                     Bekor qilish

@@ -9,6 +9,11 @@ import Loader from "../../components/loader/loader";
 import { useDispatch } from "react-redux";
 import { selectLeagueData } from "../../reducer/redux";
 import { europe } from "../../images/leagues";
+import { FaCalendarAlt } from "react-icons/fa";
+import { GiWhistle } from "react-icons/gi";
+import { FaWindowClose } from "react-icons/fa";
+import { IoTimerOutline } from "react-icons/io5";
+import { MdOutlineTimer } from "react-icons/md";
 
 const Matches = () => {
   const [leagueData, setLeagueData] = useState([]);
@@ -99,6 +104,20 @@ const Matches = () => {
       .join("");
   };
 
+  const addHoursToTime = (timeString, hoursToAdd) => {
+    const [hours, minutes] = timeString.split(":").map(Number);
+    let totalHours = hours + hoursToAdd;
+
+    // Umumiy soatlarni 24 soatdan oshmasligini ta'minlaymiz
+    totalHours = totalHours % 24;
+
+    // Yangi vaqtni formatlash
+    let newHours = totalHours.toString().padStart(2, "0");
+    let newMinutes = minutes.toString().padStart(2, "0");
+
+    return `${newHours}:${newMinutes}`;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -110,7 +129,7 @@ const Matches = () => {
     };
     fetchData();
   }, []);
-
+  console.log(leagueData);
   if (loading) {
     return (
       <div className="col-span-3 w-full h-screen flex justify-center items-center">
@@ -131,8 +150,10 @@ const Matches = () => {
       </section>
       {/* Matches */}
       <section className="w-11/12 mx-auto">
-        <h1 className="clamp3 font-bold text-white mt-[24px]">O'yinlar</h1>
-        <div className="w-full h-[2px] bg-border my-[20px]"></div>
+        <h1 className="clamp3 font-bold text-white mt-[24px]">
+          O'yinlar & natijalar
+        </h1>
+        <div className="w-full h-[2px] bg-border my-[12px]"></div>
         {leagueData?.map((league) => (
           <div key={league.league_id} className="mb-4">
             <NavLink
@@ -160,7 +181,6 @@ const Matches = () => {
                   </div>
                 )}
               </div>
-
               <div className="text-thin w-full">
                 <h1 className="text-[16px] font-[600]">
                   {league?.league_name}
@@ -171,6 +191,7 @@ const Matches = () => {
                 <img className="w-full" src={rigtharrow} alt="Right arrow" />
               </div>
             </NavLink>
+            {/* match */}
             <ul className="px-4 py-2 flex flex-col justify-center items-start bg-[#1b1c21] text-white rounded-xl mt-2">
               {league.matches.map((match) => (
                 <li
@@ -179,27 +200,17 @@ const Matches = () => {
                     navigate(`/match/${match.match_id}/${league.league_id}`);
                   }}
                   key={match.match_id}
-                  className="relative w-full grid grid-cols-3 sm:grid-cols-4 py-2 border-b border-gray-700 last:border-b-0 cursor-pointer gap-3"
+                  className="relative w-full grid grid-cols-3 sm:grid-cols-5 py-2 border-b border-gray-700 last:border-b-0 cursor-pointer gap-3"
                 >
+                  <div className="w-full flex justify-end items-center gap-1 col-span-5 text-[14px]">
+                    <div>
+                      <FaCalendarAlt className="text-primary" />
+                    </div>
+                    <h1 className="text-thin font-bold clamp4">
+                      {match?.match_date}
+                    </h1>
+                  </div>
                   <div className="flex justify-start items-center gap-2">
-                    {/* {match?.match_live == "1" ? (
-                      <div className="px-2 py-1 text-[14px] font-bold bg-red-500 rounded-[12px] text-center ">
-                        live
-                      </div>
-                    ) : (
-                      <>
-                        {match?.match_status ? (
-                          <span className="text-[14px] font-bold">
-                            {match?.match_status}
-                          </span>
-                        ) : (
-                          <div className="px-2 py-1 text-[14px] font-bold bg-green-600 rounded-[12px] text-center ">
-                            no
-                          </div>
-                        )}
-                      </>
-                    )} */}
-
                     {match?.team_home_badge ? (
                       <img
                         className="w-[30px] h-[30px] object-contain"
@@ -218,27 +229,54 @@ const Matches = () => {
                         </span>
                       </div>
                     )}
-                    <span className="font-medium text-start">
+                    <span className="font-medium text-start clamp4">
                       {match?.match_hometeam_name}
                     </span>
                   </div>
-                  <div className="flex justify-center items-center ">
-                    {match?.match_hometeam_score &&
-                    match?.match_hometeam_score ? (
-                      <span className="bg-gray-700 px-2 py-1 rounded-md text-sm">
-                        {match?.match_hometeam_score} -{" "}
-                        {match?.match_awayteam_score}
-                      </span>
-                    ) : (
-                      <span className="bg-gray-700 px-2 py-1 rounded-md text-sm">
-                        {match?.match_status
-                          ? match?.match_status
-                          : match?.match_time}
-                      </span>
-                    )}
+                  <div className="sm:col-span-2 flex justify-center items-center text-center">
+                    <div>
+                      {match?.match_hometeam_score &&
+                      match?.match_awayteam_score ? (
+                        <h1 className="px-2 py-1 rounded-md text-sm text-white font-bold">
+                          {match?.match_hometeam_score} -{" "}
+                          {match?.match_awayteam_score}
+                        </h1>
+                      ) : match?.match_status === "" ? (
+                        <h1 className="px-2 py-1 rounded-md text-sm font-bold text-thin">
+                          <span>VS</span>
+                        </h1>
+                      ) : match?.match_status === "Finished" ? (
+                        <div className="flex justify-center items-center gap-1">
+                          <GiWhistle className="text-thin" />
+                          <h1 className="text-[10px] text-thin">Yakunlangan</h1>
+                        </div>
+                      ) : match?.match_status === "Cancelled" ? (
+                        <div className="flex justify-center items-center gap-1">
+                          <FaWindowClose className="text-thin" />
+                          <h1 className="text-[12px] text-thin">
+                            Bekor qilingan
+                          </h1>
+                        </div>
+                      ) : match?.match_status === "Postponed" ? (
+                        <div className="flex justify-center items-center gap-1">
+                          <IoTimerOutline className="text-thin" />
+                          <h1 className="text-[12px] text-thin">
+                            Kechiktirilgan
+                          </h1>
+                        </div>
+                      ) : (
+                        <div className="flex justify-center items-center gap-1">
+                        <MdOutlineTimer  className="text-green-600 text-[12px]" />
+                        <h1 className="text-[12px] text-thin">
+                          {match?.match_status}'
+                        </h1>
+                      </div>
+                      )}
+                       
+                    </div>
                   </div>
                   <div className="flex justify-end items-center gap-2">
-                    <span className="font-medium  text-end">
+                    <span className="font-medium  text-end clamp4">
                       {match?.match_awayteam_name}
                     </span>
                     {match?.team_away_badge ? (
@@ -260,18 +298,13 @@ const Matches = () => {
                       </div>
                     )}
                   </div>
-                  <div className="max-sm:hidden flex justify-start items-center gap-3">
+                  <div className="max-sm:hidden flex justify-end items-center gap-3">
                     <span
                       className={`${
                         match?.match_status ? "bg-[#323337]" : "bg-[#067647]"
                       } text-sm  px-2 py-1 rounded-md`}
                     >
-                      {match?.match_status
-                        ? match?.match_status
-                        : match?.match_time}
-                    </span>
-                    <span className="text-[14px]">
-                      {formatDate(match?.match_date)}
+                      {addHoursToTime(match?.match_time, 3)}
                     </span>
                   </div>
                 </li>
