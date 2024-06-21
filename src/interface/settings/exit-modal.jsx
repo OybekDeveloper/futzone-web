@@ -25,7 +25,7 @@ export default function ExitModal({ isOpen, handleClose }) {
       <Dialog
         as="div"
         className="relative z-[100] focus:outline-none"
-        onClose={() => {}}
+        onClose={handleClose}
       >
         <div className="fixed inset-0 z-[100] w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">

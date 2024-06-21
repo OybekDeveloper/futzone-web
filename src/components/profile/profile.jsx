@@ -16,16 +16,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { exit, userlogo, userlogosecondary } from "../../images";
+import ExitModal from "../../interface/settings/exit-modal";
 
 export default function Profile() {
   const [profile, setProfile] = useState({});
+  const [isExit, setIsExit] = useState(false);
+
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   console.log(token);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
+  const handleExitModal = () => {
+    setIsExit(!isExit);
   };
 
   useEffect(() => {
@@ -50,14 +52,16 @@ export default function Profile() {
       fetchData();
     }
   }, [token]);
-  console.log(profile,"test")
+  console.log(profile, "test");
   return (
     <div className="relative z-[999] ">
       <Menu>
         <MenuButton className="inline-flex items-center gap-2 rounded-md bg-transparent py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white">
           <div
             className={`${
-              profile.photo_url?.includes("https") ? "border-[1px] border-primary" : ""
+              profile.photo_url?.includes("https")
+                ? "border-[1px] border-primary"
+                : ""
             } w-[24px] h-[24px] rounded-full overflow-hidden `}
           >
             <img
@@ -100,7 +104,7 @@ export default function Profile() {
             </MenuItem>
             <MenuItem>
               <button
-                onClick={handleLogout}
+                onClick={handleExitModal}
                 className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10"
               >
                 <img src={exit} alt="" />
@@ -113,6 +117,7 @@ export default function Profile() {
           </MenuItems>
         </Transition>
       </Menu>
+      <ExitModal isOpen={isExit} handleClose={handleExitModal} />
     </div>
   );
 }
