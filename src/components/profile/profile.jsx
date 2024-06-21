@@ -57,13 +57,13 @@ export default function Profile() {
         <MenuButton className="inline-flex items-center gap-2 rounded-md bg-transparent py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white">
           <div
             className={`${
-              profile.photo_url ? "border-[1px] border-primary" : ""
+              profile.photo_url?.includes("https") ? "border-[1px] border-primary" : ""
             } w-[24px] h-[24px] rounded-full overflow-hidden `}
           >
             <img
               className="w-full h-full"
               src={
-                profile.photo_url.includes("https")
+                profile.photo_url?.includes("https")
                   ? `https://sws-news.uz/api/v1/files/${profile.photo_url}`
                   : userlogo
               }
