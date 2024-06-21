@@ -68,7 +68,7 @@ const Settings = () => {
           <div className="photo-container relative w-[100px] h-[100px] mx-auto flex justify-center items-center border-[2px] border-solid border-primary rounded-full overflow-hidden">
             <img
               src={
-                profile.photo_url
+                profile.photo_url?.includes("https")
                   ? `https://sws-news.uz/api/v1/files/${profile.photo_url}`
                   : userlogosecondary
               }

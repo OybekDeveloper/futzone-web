@@ -79,8 +79,8 @@ export default function EditModal({ profile, isOpen, handleClose }) {
   const handleUploadPhoto = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const formData = new FormData();
-      formData.append("photo", file);
+      const newFile = new FormData();
+      newFile.append("file", file);
       const fetchData = async () => {
         try {
           await axios({
@@ -90,7 +90,7 @@ export default function EditModal({ profile, isOpen, handleClose }) {
               "Content-Type": "multipart/form-data",
               Authorization: `${token}`,
             },
-            data: formData,
+            data: newFile,
           });
         } catch (error) {
           console.log(error);
