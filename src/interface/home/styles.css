@@ -2,6 +2,12 @@
   width: 100%;
   height: calc(100vh - 120px);
 }
+@media (max-width: 768px) {
+  .swiper {
+    width: 100%;
+    height: 300px;
+  }
+}
 
 .swiper-slide {
   text-align: center;
@@ -25,7 +31,7 @@
   height: 7px;
   border-radius: 5px;
   opacity: 1;
-  background: #191220;
+  background: #2d2138;
   z-index: 20;
 }
 .swiper-pagination-bullet-active {

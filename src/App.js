@@ -33,6 +33,9 @@ const AboutUs = lazy(() => import("./interface/about-us/about-us"));
 const PrivacyPolicy = lazy(() =>
   import("./interface/privacy-policy/privacy-policy")
 );
+//news
+const News = lazy(() => import("./interface/home/news"));
+const NewsItem = lazy(() => import("./interface/home/news-item"));
 //not-found
 const NotFound = lazy(() => import("./interface/not-found/not-found"));
 
@@ -221,6 +224,7 @@ const App = () => {
               </Suspense>
             }
           />
+          {/* privacy-policy */}
           <Route
             path="/privacy-policy"
             element={
@@ -232,6 +236,35 @@ const App = () => {
                 }
               >
                 <PrivacyPolicy />
+              </Suspense>
+            }
+          />
+          {/* News */}
+          <Route
+            path="/news"
+            element={
+              <Suspense
+                fallback={
+                  <div className="w-full flex justify-center items-center h-screen">
+                    <Loader />
+                  </div>
+                }
+              >
+                <News />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/news/:id"
+            element={
+              <Suspense
+                fallback={
+                  <div className="w-full flex justify-center items-center h-screen">
+                    <Loader />
+                  </div>
+                }
+              >
+                <NewsItem />
               </Suspense>
             }
           />

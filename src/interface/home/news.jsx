@@ -1,43 +1,76 @@
 import React from "react";
 import { rigtharrow, timelogo } from "../../images";
 import { NavLink } from "react-router-dom";
+import { MdAccessTime } from "react-icons/md";
+import { IoEyeOutline } from "react-icons/io5";
+import { AiOutlineMessage } from "react-icons/ai";
+import { BiLike } from "react-icons/bi";
 
-const   News = () => {
+const News = ({ news, extractTime }) => {
+
+  
   return (
-    <div className="col-span-2 mb-[20px] w-11/12 mx-auto">
+    <div className="max-md:hidden col-span-2 mb-[20px] w-11/12 mx-auto">
       <h1 className="clamp3 text-thin font-bold">So'ngi yangiliklar</h1>
       <div className="w-full h-[2px] bg-border mt-2"></div>
       <div className="flex flex-col gap-5  my-[20px]">
-        {[1, 2, 3, 4, 5, 6, 7].map((item, idx) => (
+        {news?.map((item, idx) => (
           <div key={idx} className="w-full flex flex-col gap-2">
             <div className="w-full h-[200px]">
               <img
                 className="object-cover w-full h-full rounded-[12px]"
-                src="https://e0.365dm.com/24/06/768x432/skysports-stones-england_6580305.jpg?20240613091641"
+                src={`https://sws-news.uz/api/v1/files/${item?.images[0]}`}
                 alt=""
               />
             </div>
-            <div className="flex justify-start items-center gap-3">
-              <img src={timelogo} alt="" />
-              <h1 className="text-secondary clamp4 font-bold">
-                August 7, 2017
+            <div className="flex flex-col justify-between gap-3">
+              <h1 className="clamp3 text-white font-bold">
+                {item?.title_uz?.length > 40
+                  ? item?.title_uz.slice(0, 40) + "..."
+                  : item?.title_uz}
               </h1>
-            </div>
-            <p className="clamp4 font-[500] text-thin text-justify">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Voluptatibus modi aliquam quibusdam voluptate atque ...
-            </p>
-            <div className="flex justify-between items-center w-full">
-              <div className="cursor-pointer flex justify-start items-center gap-1">
-                {LikeSVG("red")}
-                <h1 className="text-[12px] text-thin font-bold">Yoqdi • 100 </h1>
+              <p className="clamp4 font-[500] text-thin text-justify">
+                {item?.text_uz?.length > 120
+                  ? item?.text_uz.slice(0, 120) + "..."
+                  : item?.text_uz}
+              </p>
+              <div className="flex justify-start items-center w-full">
+                <div className="w-auto flex justify-between items-center gap-3">
+                  <div className="flex justify-around items-center gap-2 text-start">
+                    <MdAccessTime className="text-[20px] text-thin" />
+                    <h1 className="text-[14px] font-bold text-thin">
+                      {extractTime(item?.created_date)}
+                    </h1>
+                  </div>
+                  <div className="flex justify-around items-center gap-2 text-start">
+                    <IoEyeOutline className="text-[20px] text-thin" />
+                    <h1 className="text-[14px] font-bold text-thin">
+                      {item?.views}
+                    </h1>
+                  </div>
+                  <div className="flex justify-around items-center gap-2 text-start">
+                    <AiOutlineMessage className="text-[20px] text-thin" />
+                    <h1 className="text-[14px] font-bold text-thin">
+                      {item?.comments}
+                    </h1>
+                  </div>
+                  <div className="flex justify-around items-center gap-2 text-start">
+                    <BiLike className="text-[20px] text-thin" />
+                    <h1 className="text-[14px] font-bold text-thin">
+                      {item?.likes}
+                    </h1>
+                  </div>
+                </div>
+                <NavLink
+                  to={`/news/${item.id}`}
+                  className="w-full flex justify-end items-center"
+                >
+                  <h1 className="clamp4 text-primary font-bold">
+                    Batafsil o'qish
+                  </h1>
+                  <img src={rigtharrow} alt="" />
+                </NavLink>
               </div>
-              <NavLink to={"/news"} className="flex justify-start items-center">
-                <h1 className="text-[12px] text-primary font-bold">
-                  Batafsil o'qish
-                </h1>
-                <img src={rigtharrow} alt="" />
-              </NavLink>
             </div>
           </div>
         ))}
