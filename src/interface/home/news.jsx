@@ -7,14 +7,12 @@ import { AiOutlineMessage } from "react-icons/ai";
 import { BiLike } from "react-icons/bi";
 
 const News = ({ news, extractTime }) => {
-
-  
   return (
     <div className="max-md:hidden col-span-2 mb-[20px] w-11/12 mx-auto">
       <h1 className="clamp3 text-thin font-bold">So'ngi yangiliklar</h1>
       <div className="w-full h-[2px] bg-border mt-2"></div>
       <div className="flex flex-col gap-5  my-[20px]">
-        {news?.map((item, idx) => (
+        {news?.slice(0, 6)?.map((item, idx) => (
           <div key={idx} className="w-full flex flex-col gap-2">
             <div className="w-full h-[200px]">
               <img

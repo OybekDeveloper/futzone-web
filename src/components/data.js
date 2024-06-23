@@ -67,21 +67,26 @@ export const SoccerLeagues = [
 export const navLinkData = [
   {
     id: 1,
-    title: "Yangiliklar",
+    title: "Asosiy",
     link: "/",
   },
   {
     id: 2,
-    title: "O’yinlar",
-    link: "/scores",
+    title: "Yangiliklar",
+    link: "/news",
   },
   {
     id: 3,
+    title: "O’yinlar",
+    link: "/matches",
+  },
+  {
+    id: 4,
     title: "Ligalar",
     link: "/leagues",
   },
   {
-    id: 4,
+    id: 5,
     title: "Futzone TV",
     link: "/futzone-tv",
   },

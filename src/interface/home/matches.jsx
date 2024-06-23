@@ -20,16 +20,9 @@ import { AiOutlineMessage } from "react-icons/ai";
 import { BiLike } from "react-icons/bi";
 
 const Matches = (props) => {
-  const {
-    extractTime,
-    news,
-    leagueData,
-    addHoursToTime,
-    getInitials,
-  } = props;
+  const { extractTime, news, leagueData, addHoursToTime, getInitials } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   return (
     <main className="col-span-3 h-full">
@@ -37,72 +30,7 @@ const Matches = (props) => {
       <section className="w-full md:screen-minus-120 max-md:h-[300px]">
         <Swapper extractTime={extractTime} />
       </section>
-      <section className="md:hidden col-span-2 mb-[20px] w-11/12 mx-auto mt-3">
-        <h1 className="clamp3 text-thin font-bold">So'ngi yangiliklar</h1>
-        <div className="w-full h-[2px] bg-border mt-2"></div>
-        <div className="flex flex-col gap-5  my-[20px]">
-          {news?.map((item, idx) => (
-            <div key={idx} className="w-full grid grid-cols-3 gap-2">
-              <div className="max-sm:col-span-3 max-md:col-span-1 w-full h-[200px]">
-                <img
-                  className="object-cover w-full h-full rounded-[12px]"
-                  src={`https://sws-news.uz/api/v1/files/${item?.images[0]}`}
-                  alt=""
-                />
-              </div>
-              <div className="max-sm:col-span-3 max-md:col-span-2 flex flex-col justify-between gap-3">
-                <h1 className="clamp3 text-white font-bold">
-                  {item?.title_uz?.length > 40
-                    ? item?.title_uz.slice(0, 40) + "..."
-                    : item?.title_uz}
-                </h1>
-                <p className="clamp4 font-[500] text-thin text-justify">
-                  {item?.text_uz?.length > 120
-                    ? item?.text_uz.slice(0, 120) + "..."
-                    : item?.text_uz}
-                </p>
-                <div className="flex justify-start items-center w-full">
-                  <div className="w-auto flex justify-between items-center gap-3">
-                    <div className="flex justify-around items-center gap-2 text-start">
-                      <MdAccessTime className="text-[20px] text-thin" />
-                      <h1 className="text-[14px] font-bold text-thin">
-                        {extractTime(item?.created_date)}
-                      </h1>
-                    </div>
-                    <div className="flex justify-around items-center gap-2 text-start">
-                      <IoEyeOutline className="text-[20px] text-thin" />
-                      <h1 className="text-[14px] font-bold text-thin">
-                        {item?.views}
-                      </h1>
-                    </div>
-                    <div className="flex justify-around items-center gap-2 text-start">
-                      <AiOutlineMessage className="text-[20px] text-thin" />
-                      <h1 className="text-[14px] font-bold text-thin">
-                        {item?.comments}
-                      </h1>
-                    </div>
-                    <div className="flex justify-around items-center gap-2 text-start">
-                      <BiLike className="text-[20px] text-thin" />
-                      <h1 className="text-[14px] font-bold text-thin">
-                        {item?.likes}
-                      </h1>
-                    </div>
-                  </div>
-                  <NavLink
-                    to={`/news/${item.id}`}
-                    className="w-full flex justify-end items-center"
-                  >
-                    <h1 className="clamp4 text-primary font-bold">
-                      Batafsil o'qish
-                    </h1>
-                    <img src={rigtharrow} alt="" />
-                  </NavLink>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+
       {/* Matches */}
       <section className="w-11/12 mx-auto">
         <h1 className="clamp3 font-bold text-white mt-[24px]">
@@ -112,7 +40,7 @@ const Matches = (props) => {
         {leagueData?.map((league) => (
           <div key={league.league_id} className="mb-4">
             <NavLink
-              to={`/leagues/${league.league_id}`}
+              to={`/leagues/${league?.league_id}`}
               className="w-full flex justify-start items-center gap-2 cursor-pointer px-4 py-3 rounded-xl text-white"
             >
               <div className="w-[50px] h-[50px] flex-shrink-0">
@@ -146,8 +74,8 @@ const Matches = (props) => {
               </div>
             </NavLink>
             {/* match */}
-            <ul className="px-4 py-2 flex flex-col justify-center items-start bg-[#1b1c21] text-white rounded-xl mt-2">
-              {league.matches.map((match) => (
+            <ul className="px-4 py-2 flex flex-col justify-center items-start bg-secondaryBg-dark text-white rounded-xl mt-2">
+              {league.matches?.slice(0, 5)?.map((match) => (
                 <li
                   onClick={() => {
                     dispatch(selectLeagueData(league));
@@ -200,12 +128,13 @@ const Matches = (props) => {
                   <div className="flex justify-center items-center text-center">
                     <div>
                       {match?.match_hometeam_score &&
-                      match?.match_awayteam_score ? (
-                        <h1 className="px-2 py-1 rounded-md text-sm text-white font-bold">
-                          {match?.match_hometeam_score} -{" "}
-                          {match?.match_awayteam_score}
-                        </h1>
-                      ) : match?.match_status === "" ? (
+                        match?.match_awayteam_score && (
+                          <h1 className="px-2 py-1 rounded-md text-sm text-white font-bold">
+                            {match?.match_hometeam_score} -{" "}
+                            {match?.match_awayteam_score}
+                          </h1>
+                        )}
+                      {match?.match_status === "" ? (
                         <h1 className="px-2 py-1 rounded-md text-sm font-bold text-thin">
                           <span>VS</span>
                         </h1>
@@ -266,6 +195,72 @@ const Matches = (props) => {
             </ul>
           </div>
         ))}
+      </section>
+      <section className="md:hidden col-span-2 mb-[20px] w-11/12 mx-auto mt-3">
+        <h1 className="clamp3 text-thin font-bold">So'ngi yangiliklar</h1>
+        <div className="w-full h-[2px] bg-border mt-2"></div>
+        <div className="flex flex-col gap-5  my-[20px]">
+          {news.slice(0, 6)?.map((item, idx) => (
+            <div key={idx} className="w-full grid grid-cols-3 gap-2">
+              <div className="max-sm:col-span-3 max-md:col-span-1 w-full h-[200px]">
+                <img
+                  className="object-cover w-full h-full rounded-[12px]"
+                  src={`https://sws-news.uz/api/v1/files/${item?.images[0]}`}
+                  alt=""
+                />
+              </div>
+              <div className="max-sm:col-span-3 max-md:col-span-2 flex flex-col justify-between gap-3">
+                <h1 className="clamp3 text-white font-bold">
+                  {item?.title_uz?.length > 40
+                    ? item?.title_uz.slice(0, 40) + "..."
+                    : item?.title_uz}
+                </h1>
+                <p className="clamp4 font-[500] text-thin text-justify">
+                  {item?.text_uz?.length > 120
+                    ? item?.text_uz.slice(0, 120) + "..."
+                    : item?.text_uz}
+                </p>
+                <div className="flex justify-start items-center w-full">
+                  <div className="w-auto flex justify-between items-center gap-3">
+                    <div className="flex justify-around items-center gap-2 text-start">
+                      <MdAccessTime className="text-[20px] text-thin" />
+                      <h1 className="text-[14px] font-bold text-thin">
+                        {extractTime(item?.created_date)}
+                      </h1>
+                    </div>
+                    <div className="flex justify-around items-center gap-2 text-start">
+                      <IoEyeOutline className="text-[20px] text-thin" />
+                      <h1 className="text-[14px] font-bold text-thin">
+                        {item?.views}
+                      </h1>
+                    </div>
+                    <div className="flex justify-around items-center gap-2 text-start">
+                      <AiOutlineMessage className="text-[20px] text-thin" />
+                      <h1 className="text-[14px] font-bold text-thin">
+                        {item?.comments}
+                      </h1>
+                    </div>
+                    <div className="flex justify-around items-center gap-2 text-start">
+                      <BiLike className="text-[20px] text-thin" />
+                      <h1 className="text-[14px] font-bold text-thin">
+                        {item?.likes}
+                      </h1>
+                    </div>
+                  </div>
+                  <NavLink
+                    to={`/news/${item.id}`}
+                    className="w-full flex justify-end items-center"
+                  >
+                    <h1 className="clamp4 text-primary font-bold">
+                      Batafsil o'qish
+                    </h1>
+                    <img src={rigtharrow} alt="" />
+                  </NavLink>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
       {/* Turnir jadvali */}
       <section className="w-11/12 mx-auto">

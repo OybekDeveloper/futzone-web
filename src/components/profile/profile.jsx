@@ -56,7 +56,7 @@ export default function Profile() {
   return (
     <div className="relative z-[999] ">
       <Menu>
-        <MenuButton className="inline-flex items-center gap-2 rounded-md bg-transparent py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white">
+        <MenuButton className="inline-flex items-center gap-2 rounded-md bg-transparent py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-secondaryBg-dark data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white">
           <div
             className={`${
               profile.photo_url?.includes("https")
@@ -88,7 +88,7 @@ export default function Profile() {
         >
           <MenuItems
             anchor="bottom end"
-            className="mt-2 w-56 border-white/5 bg-black origin-top-right rounded-xl border bg-white/5 backdrop-blur-[10px] p-1 text-sm/6 text-white focus:outline-none z-[999]"
+            className="mt-2 w-56 border-white/5  origin-top-right rounded-xl border bg-white/5 backdrop-blur-[10px] p-1 text-sm/6 text-white focus:outline-none z-[999]"
           >
             <MenuItem>
               <button

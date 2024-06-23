@@ -7,7 +7,7 @@ import { AiOutlineMessage } from "react-icons/ai";
 import { BiLike } from "react-icons/bi";
 import { FaUserSecret } from "react-icons/fa6";
 import Loader from "../../components/loader/loader";
-import Comments from "./comments";
+import Comments from "../home/comments";
 
 const NewsItem = () => {
   const { id } = useParams();

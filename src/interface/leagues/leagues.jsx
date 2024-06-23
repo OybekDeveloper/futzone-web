@@ -2,15 +2,54 @@ import React, { useEffect, useState } from "react";
 import { leaguesData } from "../../components/data";
 import { rigtharrow, timelogo } from "../../images";
 import { NavLink, useNavigate } from "react-router-dom";
+import { MdAccessTime } from "react-icons/md";
+import { IoEyeOutline } from "react-icons/io5";
+import { AiOutlineMessage } from "react-icons/ai";
+import { BiLike } from "react-icons/bi";
+import axios from "axios";
+import Loader from "../../components/loader/loader";
 
 const Leagues = () => {
   const navigate = useNavigate();
-  const [loading ,setLoading]=useState(true)
+  const [loading, setLoading] = useState(true);
+  const [news, setNews] = useState([]);
+
+  const extractTime = (datetimeStr) => {
+    const date = new Date(datetimeStr);
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
+
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios({
+          method: "GET",
+          url: `https://sws-news.uz/api/v1/news-all`,
+        });
+        if (res) {
+          setNews(res.data);
+        }
+      } catch (error) {
+        console.error("Error fetching news data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
     window.scrollTo(0, 0);
   }, []);
+
+  if (loading) {
+    return (
+      <div className="col-span-3 w-full h-screen flex justify-center items-center">
+        <Loader />
+      </div>
+    );
+  }
   return (
-    <main className="w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[88px] grid grid-cols-1 space-x-reverse md:grid-cols-5 gap-3">
+    <main className="w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[88px] grid grid-cols-1 md:grid-cols-5 gap-3">
       <section className="col-span-3 w-full h">
         <h1 className="font-bold clamp3 text-thin">Ligalar</h1>
         <div className="w-full h-[2px] bg-border mt-2"></div>
@@ -33,41 +72,63 @@ const Leagues = () => {
         <h1 className="clamp3 text-thin font-bold">So'ngi yangiliklar</h1>
         <div className="w-full h-[2px] bg-border mt-2"></div>
         <div className="flex flex-col gap-5  my-[20px]">
-          {[1, 2, 3, 4, 5, 6, 7].map((item, idx) => (
+          {news?.slice(0, 6)?.map((item, idx) => (
             <div key={idx} className="w-full flex flex-col gap-2">
               <div className="w-full h-[200px]">
                 <img
                   className="object-cover w-full h-full rounded-[12px]"
-                  src="https://e0.365dm.com/24/06/768x432/skysports-stones-england_6580305.jpg?20240613091641"
+                  src={`https://sws-news.uz/api/v1/files/${item?.images[0]}`}
                   alt=""
                 />
               </div>
-              <div className="flex justify-start items-center gap-3">
-                <img src={timelogo} alt="" />
-                <h1 className="text-secondary clamp4 font-bold">
-                  August 7, 2017
+              <div className="flex flex-col justify-between gap-3">
+                <h1 className="clamp3 text-white font-bold">
+                  {item?.title_uz?.length > 40
+                    ? item?.title_uz.slice(0, 40) + "..."
+                    : item?.title_uz}
                 </h1>
-              </div>
-              <p className="clamp4 font-[500] text-thin text-justify">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Voluptatibus modi aliquam quibusdam voluptate atque ...
-              </p>
-              <div className="flex justify-between items-center w-full">
-                <div className="cursor-pointer flex justify-start items-center gap-1">
-                  {LikeSVG("red")}
-                  <h1 className="text-[12px] text-thin font-bold">
-                    Yoqdi • 100{" "}
-                  </h1>
+                <p className="clamp4 font-[500] text-thin text-justify">
+                  {item?.text_uz?.length > 120
+                    ? item?.text_uz.slice(0, 120) + "..."
+                    : item?.text_uz}
+                </p>
+                <div className="flex justify-start items-center w-full">
+                  <div className="w-auto flex justify-between items-center gap-3">
+                    <div className="flex justify-around items-center gap-2 text-start">
+                      <MdAccessTime className="text-[20px] text-thin" />
+                      <h1 className="text-[14px] font-bold text-thin">
+                        {extractTime(item?.created_date)}
+                      </h1>
+                    </div>
+                    <div className="flex justify-around items-center gap-2 text-start">
+                      <IoEyeOutline className="text-[20px] text-thin" />
+                      <h1 className="text-[14px] font-bold text-thin">
+                        {item?.views}
+                      </h1>
+                    </div>
+                    <div className="flex justify-around items-center gap-2 text-start">
+                      <AiOutlineMessage className="text-[20px] text-thin" />
+                      <h1 className="text-[14px] font-bold text-thin">
+                        {item?.comments}
+                      </h1>
+                    </div>
+                    <div className="flex justify-around items-center gap-2 text-start">
+                      <BiLike className="text-[20px] text-thin" />
+                      <h1 className="text-[14px] font-bold text-thin">
+                        {item?.likes}
+                      </h1>
+                    </div>
+                  </div>
+                  <NavLink
+                    to={`/news/${item.id}`}
+                    className="w-full flex justify-end items-center"
+                  >
+                    <h1 className="clamp4 text-primary font-bold">
+                      Batafsil o'qish
+                    </h1>
+                    <img src={rigtharrow} alt="" />
+                  </NavLink>
                 </div>
-                <NavLink
-                  to={"/news"}
-                  className="flex justify-start items-center"
-                >
-                  <h1 className="text-[12px] text-primary font-bold">
-                    Batafsil o'qish
-                  </h1>
-                  <img src={rigtharrow} alt="" />
-                </NavLink>
               </div>
             </div>
           ))}

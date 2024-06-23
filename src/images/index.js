@@ -32,7 +32,7 @@ import aboutus from './about-us.svg'
 import global from './global.svg'
 import exit from './exit.svg'
 import close from './close.svg'
-
+import mobiletest from './photo_2024-06-23_11-42-16.jpg'
 export {
   logo,
   rigtharrow,
@@ -67,5 +67,6 @@ export {
   aboutus,
   global,
   exit,
-  close
+  close,
+  mobiletest
 };

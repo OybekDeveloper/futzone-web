@@ -5,16 +5,14 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import Loginn from "./components/login/login";
 import Register from "./components/register/register";
 import Loader from "./components/loader/loader";
-import KeyEvents from "./interface/match/key-events";
+import KeyEvents from "./interface/matches/key-events";
 import Settings from "./interface/settings/settings";
 
 // Lazy load components
 const Home = lazy(() => import("./interface/home/home"));
 //match
-const Match = lazy(() => import("./interface/match/match"));
-const Summary = lazy(() => import("./interface/match/summary"));
-const Contents = lazy(() => import("./interface/match/contents"));
-const Comments = lazy(() => import("./interface/match/comments"));
+const Match = lazy(() => import("./interface/matches/match"));
+const Matches = lazy(() => import("./interface/matches/scores"));
 //leagues
 const League = lazy(() => import("./interface/leagues/league"));
 const LastMatch = lazy(() => import("./interface/home/last-match"));
@@ -22,7 +20,6 @@ const ComingMatch = lazy(() => import("./interface/home/coming-match"));
 //live
 const LiveMatch = lazy(() => import("./interface/home/live-match"));
 //scores
-const Scores = lazy(() => import("./interface/scores/scores"));
 const Leagues = lazy(() => import("./interface/leagues/leagues"));
 const FutzoneTV = lazy(() => import("./interface/futzone-tv/futzone-tv"));
 //liked news
@@ -34,8 +31,8 @@ const PrivacyPolicy = lazy(() =>
   import("./interface/privacy-policy/privacy-policy")
 );
 //news
-const News = lazy(() => import("./interface/home/news"));
-const NewsItem = lazy(() => import("./interface/home/news-item"));
+const News = lazy(() => import("./interface/news/news"));
+const NewsItem = lazy(() => import("./interface/news/news-item"));
 //not-found
 const NotFound = lazy(() => import("./interface/not-found/not-found"));
 
@@ -50,7 +47,7 @@ const App = () => {
     }
   }, [pathname]);
   return (
-    <div className="app">
+    <div className="app bg-scaffoldBg-dark">
       <Navbar />
       <div
         id="app"
@@ -75,53 +72,10 @@ const App = () => {
                 <Home />
               </Suspense>
             }
-          >
-            <Route
-              path="last-match"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="w-full flex justify-center items-center h-screen">
-                      <Loader />
-                    </div>
-                  }
-                >
-                  <LastMatch />
-                </Suspense>
-              }
-            />
-            <Route
-              path="coming-match"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="w-full flex justify-center items-center h-screen">
-                      <Loader />
-                    </div>
-                  }
-                >
-                  <ComingMatch />
-                </Suspense>
-              }
-            />
-            <Route
-              path="live-match"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="w-full flex justify-center items-center h-screen">
-                      <Loader />
-                    </div>
-                  }
-                >
-                  <LiveMatch />
-                </Suspense>
-              }
-            />
-          </Route>
+          />
           {/* Scores pages */}
           <Route
-            path="/scores"
+            path="/matches"
             element={
               <Suspense
                 fallback={
@@ -130,7 +84,7 @@ const App = () => {
                   </div>
                 }
               >
-                <Scores />
+                <Matches />
               </Suspense>
             }
           />

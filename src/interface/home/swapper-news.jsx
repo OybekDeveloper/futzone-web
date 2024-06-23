@@ -15,7 +15,7 @@ import "./styles.css";
 // import required modules
 import { Pagination, Autoplay } from "swiper/modules";
 import axios from "axios";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Swapper({extractTime}) {
   const navigate = useNavigate();

@@ -8,12 +8,35 @@
   margin: 0;
   box-sizing: border-box;
 }
+:root {
+  --black: #0a0b11;
+  --white: #FFFFFF;
+  --navbar-icon: #FFFFFF;
+  --navbar-text: #FFFFFF;
+  --navbar: #252641;
+  --primary: #7F00FF;
+  --background-bg-light: #FFFFFF;
+  --background-bg-dark: #171827;
+  --secondary-bg-light: #FFFFFF;
+  --secondary-bg-dark: #252641;
+  --text-light: #0a0b11;
+  --text-dark: #FFFFFF;
+  --icon-light: #0a0b11;
+  --icon-dark: #FFFFFF;
+  --secondary-text-light: #797979;
+  --secondary-text-dark: #DADADA;
+  --base-light: #FFFFFF;
+  --base-dark: #0a0b11;
+  --highlight-light: grey;
+  --highlight-dark: blueGrey;
+  --error: red;
+}
+
 html {
   scroll-behavior: smooth;
 }
 body {
-  background: #212227;
-  /* background: #28282c; */
+  background: var(--background-bg-dark);
   font-family: "Robot,sans-serif";
 }
 
@@ -55,6 +78,95 @@ body {
   filter: blur(10px);
 }
 
-.dad{
+.dad {
   color: #e43f3f;
+}
+
+/* custom-styles.css */
+
+/* Dark mode styles */
+.dark .bg-scaffoldBg-dark {
+  background-color: #171827;
+}
+
+.dark .bg-secondaryBg-dark {
+  background-color: #252641;
+}
+
+.dark .text-text-dark {
+  color: #ffffff;
+}
+
+.dark .text-icon-dark {
+  color: #ffffff;
+}
+
+.dark .text-secondaryText-dark {
+  color: #dadada;
+}
+
+.dark .bg-base-dark {
+  background-color: #0a0b11;
+}
+
+.dark .bg-highlight-dark {
+  background-color: blueGrey;
+}
+
+/* Light mode styles */
+.bg-scaffoldBg-light {
+  background-color: #ffffff;
+}
+
+.bg-secondaryBg-light {
+  background-color: #ffffff;
+}
+
+.text-text-light {
+  color: #0a0b11;
+}
+
+.text-icon-light {
+  color: #0a0b11;
+}
+
+.text-secondaryText-light {
+  color: #797979;
+}
+
+.bg-base-light {
+  background-color: #ffffff;
+}
+
+.bg-highlight-light {
+  background-color: grey;
+}
+
+/* Common styles */
+.bg-black {
+  background-color: #0a0b11;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.text-appbarIcon {
+  color: #ffffff;
+}
+
+.text-appbarText {
+  color: #ffffff;
+}
+
+.bg-appbar {
+  background-color: #252641;
+}
+
+.bg-main {
+  background-color: #7f00ff;
+}
+
+.text-error {
+  color: red;
 }

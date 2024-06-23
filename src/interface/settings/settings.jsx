@@ -5,6 +5,7 @@ import {
   exit,
   global,
   like,
+  mobiletest,
   userlogosecondary,
 } from "../../images";
 import axios from "axios";
@@ -64,7 +65,7 @@ const Settings = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="bg-background rounded-[12px] max-w-[400px] w-11/12 h-full p-4">
+        <div className="bg-secondaryBg-dark rounded-[12px] max-w-[400px] w-11/12 h-full p-4">
           <div className="photo-container relative w-[100px] h-[100px] mx-auto flex justify-center items-center border-[2px] border-solid border-primary rounded-full overflow-hidden">
             <img
               src={

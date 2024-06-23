@@ -82,6 +82,7 @@ const Home = () => {
       setError("Failed to fetch all league data");
     }
   };
+  
   const getInitials = (name) => {
     return name
       .split(" ")

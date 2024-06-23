@@ -30,7 +30,7 @@ export default function EditModal({ profile, isOpen, handleClose }) {
         phone: profile.phone_number,
         photo: profile.photo_url,
         password: profile.password,
-        club_badge:profile.club_badge
+        club_badge: profile.club_badge,
       });
     }
   }, [profile]);
@@ -72,12 +72,9 @@ export default function EditModal({ profile, isOpen, handleClose }) {
     fetchData();
   };
 
-  const handleFileInputClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleUploadPhoto = (event) => {
-    const file = event.target.files[0];
+  const handleUploadPhoto = (e) => {
+    const file = e.target.files[0];
+    console.log(file);
     if (file) {
       const newFile = new FormData();
       newFile.append("file", file);
@@ -88,15 +85,22 @@ export default function EditModal({ profile, isOpen, handleClose }) {
             url: "https://sws-news.uz/api/v1/files/upload",
             headers: {
               "Content-Type": "multipart/form-data",
-              Authorization: `${token}`,
+              Authorization: `Bearer ${token}`,
             },
             data: newFile,
           });
+          // Optionally, you can update the profile photo URL here by calling a function or updating the state.
         } catch (error) {
-          console.log(error);
+          console.error("Error uploading photo:", error);
         }
       };
       fetchData();
+    }
+  };
+
+  const handleFileInputClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
 
@@ -123,17 +127,20 @@ export default function EditModal({ profile, isOpen, handleClose }) {
                   <div className="photo-container relative w-[100px] h-[100px] mx-auto flex justify-center items-center border-[2px] border-solid border-primary rounded-full overflow-hidden">
                     <img
                       src={
-                        profile.photo_url
+                        uploadPhoto
+                          ? `https://sws-news.uz/api/v1/files/${uploadPhoto}`
+                          : profile?.photo_url?.includes("https")
                           ? `https://sws-news.uz/api/v1/files/${profile.photo_url}`
                           : userlogosecondary
                       }
-                      alt=""
+                      alt="Profile"
+                      className="w-full h-full object-cover opacity-[0.7]"
                     />
                     <div
                       onClick={handleFileInputClick}
                       className="edit-photo absolute w-full h-full bg-black/5 flex justify-center items-center cursor-pointer"
                     >
-                      <MdOutlinePhotoCamera className=" text-thin text-[24px]" />
+                      <MdOutlinePhotoCamera className="text-thin text-[24px]" />
                     </div>
                     <input
                       type="file"
