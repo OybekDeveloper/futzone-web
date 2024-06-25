@@ -7,6 +7,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { AiOutlineMessage } from "react-icons/ai";
 import { BiLike } from "react-icons/bi";
 import { rigtharrow } from "../../images";
+import Swapper from "../home/swapper-news";
 
 const News = () => {
   const [loading, setLoading] = useState(true);
@@ -48,7 +49,10 @@ const News = () => {
   }
 
   return (
-    <main className="w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[88px]">
+    <main className="w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[100px]">
+      <section className="w-full md:screen-minus-120 max-md:h-[300px]">
+        <Swapper extractTime={extractTime} />
+      </section>
       <div className="col-span-2 mb-[20px] w-11/12 mx-auto">
         <h1 className="clamp3 text-thin font-bold">Barcha yangiliklar</h1>
         <div className="w-full h-[2px] bg-border mt-2"></div>

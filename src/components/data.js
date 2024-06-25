@@ -21,6 +21,13 @@ import {
   uzb,
 } from "../images/leagues";
 
+import { FaTelegram } from "react-icons/fa6";
+import { RiRobot2Fill } from "react-icons/ri";
+import { BiSupport } from "react-icons/bi";
+import { IoPhonePortraitOutline } from "react-icons/io5";
+import { FaInstagram } from "react-icons/fa";
+import { AiFillYoutube } from "react-icons/ai";
+
 export const SoccerLeagues = [
   { id: 30, liga_id: "1", name: "euro" },
   { id: 1, liga_id: "336", name: "uzSuperliga" },
@@ -126,5 +133,30 @@ export const leagueEventsData = [
   {
     id: 2,
     title: "To'purarlar",
+  },
+];
+
+export const socialMedias = [
+  { name: "Telegram", url: "https://t.me/futzoneuz", icon: <FaTelegram /> },
+  { name: "Bot", url: "https://t.me/futzone_bot", icon: <RiRobot2Fill /> },
+  {
+    name: "Support Bot",
+    url: "https://t.me/Futzone_SupportBot",
+    icon: <BiSupport />,
+  },
+  {
+    name: "App",
+    url: "https://futzone.uz/apps",
+    icon: <IoPhonePortraitOutline />,
+  },
+  {
+    name: "Instagram",
+    url: "https://www.instagram.com/futzone.uz",
+    icon: <FaInstagram />,
+  },
+  {
+    name: "YouTube",
+    url: "https://www.youtube.com/@futzoneuz",
+    icon: <AiFillYoutube />,
   },
 ];

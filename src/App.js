@@ -7,6 +7,7 @@ import Register from "./components/register/register";
 import Loader from "./components/loader/loader";
 import KeyEvents from "./interface/matches/key-events";
 import Settings from "./interface/settings/settings";
+import axios from "axios";
 
 // Lazy load components
 const Home = lazy(() => import("./interface/home/home"));
@@ -23,12 +24,12 @@ const LiveMatch = lazy(() => import("./interface/home/live-match"));
 const Leagues = lazy(() => import("./interface/leagues/leagues"));
 const FutzoneTV = lazy(() => import("./interface/futzone-tv/futzone-tv"));
 //liked news
-const LikedPostes = lazy(() => import("./interface/liked-postes/liked-postes"));
+const LikedPostes = lazy(() => import("./interface/settings/pages/liked-postes"));
 //about news
-const AboutUs = lazy(() => import("./interface/about-us/about-us"));
+const AboutUs = lazy(() => import("./interface/settings/pages/about-us"));
 //privacy policy
 const PrivacyPolicy = lazy(() =>
-  import("./interface/privacy-policy/privacy-policy")
+  import("./interface/settings/pages/privacy-policy")
 );
 //news
 const News = lazy(() => import("./interface/news/news"));
@@ -46,6 +47,27 @@ const App = () => {
       body.style.overflow = "visible";
     }
   }, [pathname]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const fetchData = async () => {
+      //user cheked
+      try {
+        await axios({
+          method: "GET",
+          url: `https://sws-news.uz/api/v1/user`,
+          headers: {
+            Authorization: `${token}`,
+          },
+        });
+      } catch (error) {
+        localStorage.removeItem("token");
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="app bg-scaffoldBg-dark">
       <Navbar />

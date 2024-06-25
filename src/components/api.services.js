@@ -1,6 +1,19 @@
 import axios from "axios";
 const baseUrl = `https://apiv3.apifootball.com/?action=`;
-const apiKey = process.env.REACT_APP_FOOTBALL_API_KEY;
+
+const fetchSecretKey = async () => {
+  try {
+    const secretKey = await axios({
+      method: "GET",
+      url: `https://sws-news.uz/api/v1/secrets`,
+    });
+    return secretKey.data.soccer_key;
+  } catch (error) {
+    console.log(error);
+  }
+};
+const apiKey = await fetchSecretKey();
+
 export const ApiServer = {
   async getEventsData(from, to, liga_id) {
     const response = await axios({

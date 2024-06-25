@@ -5,20 +5,14 @@ import {
   MenuItems,
   Transition,
 } from "@headlessui/react";
-import {
-  ArchiveBoxXMarkIcon,
-  ChevronDownIcon,
-  PencilIcon,
-  Square2StackIcon,
-  TrashIcon,
-} from "@heroicons/react/16/solid";
+import { ChevronDownIcon, PencilIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { exit, userlogo, userlogosecondary } from "../../images";
+import { exit, userlogo } from "../../images";
 import ExitModal from "../../interface/settings/exit-modal";
 
-export default function Profile() {
+export default function Profile({ handleClose }) {
   const [profile, setProfile] = useState({});
   const [isExit, setIsExit] = useState(false);
 
@@ -28,6 +22,7 @@ export default function Profile() {
 
   const handleExitModal = () => {
     setIsExit(!isExit);
+    handleClose();
   };
 
   useEffect(() => {
@@ -92,7 +87,10 @@ export default function Profile() {
           >
             <MenuItem>
               <button
-                onClick={() => navigate("/settings")}
+                onClick={() => {
+                  handleClose();
+                  navigate("/settings");
+                }}
                 className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10"
               >
                 <PencilIcon className="size-4 fill-white/30" />

@@ -15,6 +15,10 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleClose=() => {
+    setIsOpen(false);
+  }
+
   useEffect(() => {
     const body = document.body;
     const app = document.querySelector("#app");
@@ -34,6 +38,7 @@ const Navbar = () => {
     >
       <div className="w-11/12 md:w-11/12 lg:max-w-[80%] mx-auto h-full flex justify-between items-center">
         <NavLink
+        onClick={handleClose}
           to="/"
           className="cursor-pointer h-full flex items-center gap-2"
         >
@@ -66,7 +71,7 @@ const Navbar = () => {
         <div className="text-gray-800 flex gap-3 items-center">
           {token ? (
             <div>
-              <Profile />
+              <Profile handleClose={handleClose} />
             </div>
           ) : (
             <>
@@ -106,7 +111,7 @@ const Navbar = () => {
               animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : "100%" }}
               exit={{ opacity: 0, x: "100%" }}
               transition={{ duration: 0.5 }}
-              className="bg-gray-700 max-sm:w-full max-md:w-[70%] md:hidden absolute top-[88px] right-0 h-[calc(100vh-88px)] p-4 flex flex-col gap-4 "
+              className="bg-navbar max-sm:w-full max-md:w-[70%] md:hidden absolute top-[88px] right-0 h-[calc(100vh-88px)] p-4 flex flex-col gap-4 "
             >
               {navLinkData.map((item, idx) => (
                 <motion.div

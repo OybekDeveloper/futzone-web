@@ -52,9 +52,9 @@ const NewsItem = () => {
 
   return (
     <main className="w-11/12 md:w-[70%] max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[88px] flex flex-col gap-3">
-      <div className="w-full h-[80%]">
+      <div className="w-full max-h-[300px] md:max-h-[400px] overflow-hidden">
         <img
-          className="object-contain w-full h-[80%]"
+          className="object-cover w-full h-full"
           src={`https://sws-news.uz/api/v1/files/${news?.images[0]}`}
           alt=""
         />
