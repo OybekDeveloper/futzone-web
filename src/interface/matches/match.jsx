@@ -79,7 +79,7 @@ const Match = () => {
     );
   }
   return (
-    <main className="w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[88px]  gap-3">
+    <main className="w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[88px] gap-2">
       <section className="w-full flex justify-center items-start flex-col py-4">
         <div className="w-full grid grid-cols-3 gap-4">
           <div className="flex max-md:flex-col-reverse max-md:justify-between justify-end items-center gap-3">
@@ -298,8 +298,8 @@ const Match = () => {
           </div>
         </div>
       </section>
-      <section className="flex flex-col justify-start items-start gap-[14px]">
-        <div className="no-scroll w-full overflow-x-scroll whitespace-nowrap gap-[20px] ">
+      <section className="flex flex-col justify-start items-start gap-[14px] relative">
+        <div className="sticky top-[88px] no-scroll w-full overflow-x-scroll whitespace-nowrap gap-[20px] bg-primaryBg-dark py-2 z-[40]">
           {matchEventsData.map((item, idx) => (
             <button
               onClick={() => handleActiveTab(item)}

@@ -57,7 +57,7 @@ body {
   font-size: clamp(1.1rem, 4vw, 1.3rem);
 }
 .clamp4 {
-  font-size: clamp(10px, 3vw, 1rem);
+  font-size: clamp(12px, 3vw, 1.3rem);
 }
 .clamp5 {
   font-size: clamp(8px, 2vw, 0.8rem);
