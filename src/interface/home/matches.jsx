@@ -18,9 +18,10 @@ import { MdAccessTime } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import { AiOutlineMessage } from "react-icons/ai";
 import { BiLike } from "react-icons/bi";
+import { GiTrophyCup } from "react-icons/gi";
 
 const Matches = (props) => {
-  const { extractTime, news, leagueData, addHoursToTime, getInitials } = props;
+  const { extractTime, news, matchesData, addHoursToTime, getInitials } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,168 +34,141 @@ const Matches = (props) => {
 
       {/* Matches */}
       <section className="w-11/12 mx-auto">
-        <h1 className="clamp3 font-bold text-white mt-[24px]">
-          O'yinlar & natijalar
-        </h1>
-        <div className="w-full h-[2px] bg-border my-[12px]"></div>
-        {leagueData?.map((league) => (
-          <div key={league.league_id} className="mb-4">
-            <NavLink
-              to={`/leagues/${league?.league_id}`}
-              className="w-full flex justify-start items-center gap-2 cursor-pointer px-4 py-3 rounded-xl text-white"
+        <div className="w-full flex justify-between items-center mt-[24px]">
+          <h1 className="clamp3 font-bold text-white">O'yinlar & natijalar</h1>
+          <NavLink to={`/matches`} className="flex items-center justify-start">
+            <h1 className="clamp4 text-primary font-bold">Barcha o'yinlar</h1>
+            <img src={rigtharrow} alt="" />
+          </NavLink>
+        </div>
+        <div className="w-full h-[2px] bg-navbar my-[12px]"></div>
+        {/* match */}
+        <ul className="py-2 flex flex-col justify-center items-start gap-3">
+          {matchesData?.slice(0, 10)?.map((match) => (
+            <li
+              onClick={() => {
+                navigate(`/match/${match.match_id}`);
+              }}
+              key={match.match_id}
+              className="bg-secondaryBg-dark text-white relative w-full grid grid-cols-3 py-2 rounded-[12px] px-3 cursor-pointer gap-3 "
             >
-              <div className="w-[50px] h-[50px] flex-shrink-0">
-                {league?.country_logo ? (
+              <div className="w-full flex justify-between items-center gap-2 col-span-3 text-[14px]">
+                <div className="flex justify-start items-center gap-1">
+                  <div>
+                    <GiTrophyCup className="text-primary" />
+                  </div>
+                  <h1 className="text-thin font-bold clamp4">
+                    {match?.league_name}
+                  </h1>
+                </div>
+                {match.match_status === "Finished" ? (
+                  <div className="flex justify-start items-center gap-1">
+                    <div>
+                      <FaCalendarAlt className="text-primary" />
+                    </div>
+                    <h1 className="text-thin font-bold clamp4">
+                      {match?.match_date}
+                    </h1>
+                  </div>
+                ) : (
+                  <div className="flex justify-start items-center gap-1">
+                    <div>
+                      <MdAccessTime className="text-primary text-[16px]" />
+                    </div>
+                    <h1 className="text-thin font-bold clamp4">
+                      {addHoursToTime(match?.match_time, 3)}
+                    </h1>
+                  </div>
+                )}
+              </div>
+              <div className="flex justify-start items-center gap-2">
+                {match?.team_home_badge ? (
                   <img
-                    className="w-full h-full object-contain rounded-md"
-                    src={league?.country_logo}
-                    alt={`${league?.country_name} logo`}
-                  />
-                ) : +league.league_id === 1 ? (
-                  <img
-                    className="w-full h-full  rounded-md"
-                    src={europe}
-                    alt={`${league?.country_name} logo`}
+                    className="w-[30px] h-[30px] object-contain"
+                    src={
+                      match?.team_home_badge
+                        ? match?.team_home_badge
+                        : emptyclub
+                    }
+                    alt={`${match?.match_hometeam_name} logo`}
+                    onError={(e) => (e.target.src = emptyclub)}
                   />
                 ) : (
-                  <div className="w-full h-full bg-gray-700 flex justify-center items-center rounded-md text-[24px]">
+                  <div className="w-[30px] h-[30px] bg-gray-700 flex justify-center items-center rounded-md">
                     <span className="text-white font-bold">
-                      {getInitials(league?.country_name)}
+                      {getInitials(match?.match_hometeam_name)}
+                    </span>
+                  </div>
+                )}
+                <span className="font-medium text-start clamp4">
+                  {match?.match_hometeam_name}
+                </span>
+              </div>
+              <div className="flex justify-center items-center text-center">
+                <div>
+                  {match?.match_hometeam_score &&
+                    match?.match_awayteam_score && (
+                      <h1 className="px-2 py-1 rounded-md clamp1 text-primary font-bold">
+                        {match?.match_hometeam_score} :{" "}
+                        {match?.match_awayteam_score}
+                      </h1>
+                    )}
+                  {match?.match_status === "" ? (
+                    <h1 className="px-2 py-1 rounded-md text-sm font-bold text-thin">
+                      <span>VS</span>
+                    </h1>
+                  ) : match?.match_status === "Finished" ? (
+                    <div className="flex justify-center items-center gap-1">
+                      <GiWhistle className="text-thin" />
+                      <h1 className="text-[10px] text-thin">Yakunlangan</h1>
+                    </div>
+                  ) : match?.match_status === "Cancelled" ? (
+                    <div className="flex justify-center items-center gap-1">
+                      <FaWindowClose className="text-thin" />
+                      <h1 className="text-[12px] text-thin">Bekor qilingan</h1>
+                    </div>
+                  ) : match?.match_status === "Postponed" ? (
+                    <div className="flex justify-center items-center gap-1">
+                      <IoTimerOutline className="text-thin" />
+                      <h1 className="text-[12px] text-thin">Kechiktirilgan</h1>
+                    </div>
+                  ) : (
+                    <div className="flex justify-center items-center gap-1">
+                      <MdOutlineTimer className="text-green-600 text-[12px]" />
+                      <h1 className="text-[12px] text-thin">
+                        {match?.match_status}'
+                      </h1>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="flex justify-end items-center gap-2">
+                <span className="font-medium  text-end clamp4">
+                  {match?.match_awayteam_name}
+                </span>
+                {match?.team_away_badge ? (
+                  <img
+                    className="w-[30px] h-[30px] object-contain"
+                    alt={`${match?.match_awayteam_name} logo`}
+                    src={
+                      match?.team_away_badge
+                        ? match?.team_away_badge
+                        : emptyclub
+                    }
+                    onError={(e) => (e.target.src = emptyclub)}
+                  />
+                ) : (
+                  <div className="w-[30px] h-[30px] bg-gray-700 flex justify-center items-center rounded-md">
+                    <span className="text-white font-bold">
+                      {getInitials(match?.match_awayteam_name)}
                     </span>
                   </div>
                 )}
               </div>
-              <div className="text-thin w-full">
-                <h1 className="text-[16px] font-[600]">
-                  {league?.league_name}
-                </h1>
-              </div>
-              <div className="w-[50px] flex justify-end items-center">
-                <img className="w-full" src={rigtharrow} alt="Right arrow" />
-              </div>
-            </NavLink>
-            {/* match */}
-            <ul className="px-4 py-2 flex flex-col justify-center items-start bg-secondaryBg-dark text-white rounded-xl mt-2">
-              {league.matches?.slice(0, 5)?.map((match) => (
-                <li
-                  onClick={() => {
-                    dispatch(selectLeagueData(league));
-                    navigate(`/match/${match.match_id}/${league.league_id}`);
-                  }}
-                  key={match.match_id}
-                  className="relative w-full grid grid-cols-3 py-2 border-b border-gray-700 last:border-b-0 cursor-pointer gap-3"
-                >
-                  <div className="w-full flex justify-end items-center gap-2 col-span-3 text-[14px]">
-                    <div className="flex justify-start items-center gap-1">
-                      <div>
-                        <MdAccessTime className="text-primary text-[16px]" />
-                      </div>
-                      <h1 className="text-thin font-bold clamp4">
-                        {addHoursToTime(match?.match_time, 3)}
-                      </h1>
-                    </div>
-                    <div className="flex justify-start items-center gap-1">
-                      <div>
-                        <FaCalendarAlt className="text-primary" />
-                      </div>
-                      <h1 className="text-thin font-bold clamp4">
-                        {match?.match_date}
-                      </h1>
-                    </div>
-                  </div>
-                  <div className="flex justify-start items-center gap-2">
-                    {match?.team_home_badge ? (
-                      <img
-                        className="w-[30px] h-[30px] object-contain"
-                        src={
-                          match?.team_home_badge
-                            ? match?.team_home_badge
-                            : emptyclub
-                        }
-                        alt={`${match?.match_hometeam_name} logo`}
-                        onError={(e) => (e.target.src = emptyclub)}
-                      />
-                    ) : (
-                      <div className="w-[30px] h-[30px] bg-gray-700 flex justify-center items-center rounded-md">
-                        <span className="text-white font-bold">
-                          {getInitials(match?.match_hometeam_name)}
-                        </span>
-                      </div>
-                    )}
-                    <span className="font-medium text-start clamp4">
-                      {match?.match_hometeam_name}
-                    </span>
-                  </div>
-                  <div className="flex justify-center items-center text-center">
-                    <div>
-                      {match?.match_hometeam_score &&
-                        match?.match_awayteam_score && (
-                          <h1 className="px-2 py-1 rounded-md text-sm text-white font-bold">
-                            {match?.match_hometeam_score} -{" "}
-                            {match?.match_awayteam_score}
-                          </h1>
-                        )}
-                      {match?.match_status === "" ? (
-                        <h1 className="px-2 py-1 rounded-md text-sm font-bold text-thin">
-                          <span>VS</span>
-                        </h1>
-                      ) : match?.match_status === "Finished" ? (
-                        <div className="flex justify-center items-center gap-1">
-                          <GiWhistle className="text-thin" />
-                          <h1 className="text-[10px] text-thin">Yakunlangan</h1>
-                        </div>
-                      ) : match?.match_status === "Cancelled" ? (
-                        <div className="flex justify-center items-center gap-1">
-                          <FaWindowClose className="text-thin" />
-                          <h1 className="text-[12px] text-thin">
-                            Bekor qilingan
-                          </h1>
-                        </div>
-                      ) : match?.match_status === "Postponed" ? (
-                        <div className="flex justify-center items-center gap-1">
-                          <IoTimerOutline className="text-thin" />
-                          <h1 className="text-[12px] text-thin">
-                            Kechiktirilgan
-                          </h1>
-                        </div>
-                      ) : (
-                        <div className="flex justify-center items-center gap-1">
-                          <MdOutlineTimer className="text-green-600 text-[12px]" />
-                          <h1 className="text-[12px] text-thin">
-                            {match?.match_status}'
-                          </h1>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex justify-end items-center gap-2">
-                    <span className="font-medium  text-end clamp4">
-                      {match?.match_awayteam_name}
-                    </span>
-                    {match?.team_away_badge ? (
-                      <img
-                        className="w-[30px] h-[30px] object-contain"
-                        alt={`${match?.match_awayteam_name} logo`}
-                        src={
-                          match?.team_away_badge
-                            ? match?.team_away_badge
-                            : emptyclub
-                        }
-                        onError={(e) => (e.target.src = emptyclub)}
-                      />
-                    ) : (
-                      <div className="w-[30px] h-[30px] bg-gray-700 flex justify-center items-center rounded-md">
-                        <span className="text-white font-bold">
-                          {getInitials(match?.match_awayteam_name)}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+            </li>
+          ))}
+        </ul>
+        \
       </section>
       <section className="md:hidden col-span-2 mb-[20px] w-11/12 mx-auto mt-3">
         <h1 className="clamp3 text-thin font-bold">So'ngi yangiliklar</h1>

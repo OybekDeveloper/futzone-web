@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { logo } from "../../images";
-import { navLinkData, socialMedias } from "../data";
+import { AppData, SupportData, navLinkData, socialMedias } from "../data";
 
 const Footer = () => {
   const { pathname } = useLocation();
@@ -53,6 +53,36 @@ const Footer = () => {
                 key={idx}
                 className={
                   "inline-flex whitespace-nowrap justify-center items-center  px-2 py-2 rounded-lg text-thin hover:text-primary transition-all duration-300 gap-2"
+                }
+              >
+                <div className=" clamp3 gap-1 ">{item.icon}</div>
+                <h1 className="">{item.name}</h1>
+              </NavLink>
+            ))}
+          </div>
+          <div className="">
+            <h1 className="text-white font-bold clamp3">Qo'llab-quvvatlash</h1>
+            {SupportData.map((item, idx) => (
+              <NavLink
+                to={item.url}
+                key={idx}
+                className={
+                  "inline-flex whitespace-nowrap justify-center items-center  px-2 py-2 rounded-lg text-thin hover:text-primary transition-all duration-300 gap-2"
+                }
+              >
+                <div className=" clamp3 gap-1 ">{item.icon}</div>
+                <h1 className="">{item.name}</h1>
+              </NavLink>
+            ))}
+          </div>
+          <div className="">
+            <h1 className="text-white font-bold clamp3">Ilovamiz</h1>
+            {AppData.map((item, idx) => (
+              <NavLink
+                to={item.url}
+                key={idx}
+                className={
+                  "flex whitespace-nowrap justify-start items-start py-2 rounded-lg text-thin hover:text-primary transition-all duration-300 gap-2"
                 }
               >
                 <div className=" clamp3 gap-1 ">{item.icon}</div>

@@ -112,7 +112,7 @@ const App = () => {
           />
           {/* Match pages */}
           <Route
-            path="/match/:match_id/:league_id"
+            path="/match/:match_id"
             element={
               <Suspense
                 fallback={

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Os  wald:wght@200..700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap");
 * {
   padding: 0;
   margin: 0;
@@ -10,22 +10,22 @@
 }
 :root {
   --black: #0a0b11;
-  --white: #FFFFFF;
-  --navbar-icon: #FFFFFF;
-  --navbar-text: #FFFFFF;
+  --white: #ffffff;
+  --navbar-icon: #ffffff;
+  --navbar-text: #ffffff;
   --navbar: #252641;
-  --primary: #7F00FF;
-  --background-bg-light: #FFFFFF;
+  --primary: #7f00ff;
+  --background-bg-light: #ffffff;
   --background-bg-dark: #171827;
-  --secondary-bg-light: #FFFFFF;
+  --secondary-bg-light: #ffffff;
   --secondary-bg-dark: #252641;
   --text-light: #0a0b11;
-  --text-dark: #FFFFFF;
+  --text-dark: #ffffff;
   --icon-light: #0a0b11;
-  --icon-dark: #FFFFFF;
+  --icon-dark: #ffffff;
   --secondary-text-light: #797979;
-  --secondary-text-dark: #DADADA;
-  --base-light: #FFFFFF;
+  --secondary-text-dark: #dadada;
+  --base-light: #ffffff;
   --base-dark: #0a0b11;
   --highlight-light: grey;
   --highlight-dark: blueGrey;
@@ -39,7 +39,9 @@ body {
   background: var(--background-bg-dark);
   font-family: "Afacad", sans-serif;
 }
-
+.no-scroll::-webkit-scrollbar {
+  display: none;
+}
 .logo-futzone {
   font-family: "Oswald", sans-serif;
 }

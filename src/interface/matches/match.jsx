@@ -1,81 +1,59 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ApiServer } from "../../components/api.services";
-import { useSelector } from "react-redux";
 import { assissvg, emptyclub, goalsvg } from "../../images";
 import Loader from "../../components/loader/loader";
 import { motion } from "framer-motion";
-import Summary from "./summary";
-import Contents from "./contents";
-import Comments from "./comments";
+import Summary from "./events/summary";
+import Contents from "./events/contents";
+import Comments from "./events/comments";
+import { GiWhistle } from "react-icons/gi";
+import { FaWindowClose } from "react-icons/fa";
+import { IoTimerOutline } from "react-icons/io5";
+import { MdOutlineTimer } from "react-icons/md";
 import { matchEventsData } from "../../components/data";
+import { GiTrophyCup } from "react-icons/gi";
+import { MdOutlineStadium } from "react-icons/md";
+import { FaCalendarDays } from "react-icons/fa6";
+import { IoFootball } from "react-icons/io5";
+import Main from "./events/main";
+import Statistics from "./events/statistics";
+
 const Match = () => {
-  const { match_id, league_id } = useParams();
+  const { match_id } = useParams();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   const [match, setMatch] = useState({});
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(1);
-  const { leagueData } = useSelector((state) => state.event);
 
-    const handleActiveTab = (active) => {
-      setActiveTab(active.id);
-    };
-
-  const getCurrentDateWith12HoursAdded = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-
-    const currentDate = `${year}-${month}-${day}`;
-
-    now.setHours(now.getHours() + 12);
-
-    const newYear = now.getFullYear();
-    const newMonth = String(now.getMonth() + 1).padStart(2, "0");
-    const newDay = String(now.getDate()).padStart(2, "0");
-    const newDate = `${newYear}-${newMonth}-${newDay}`;
-
-    return { newDate, currentDate };
-  };
-
-  const formatDate = (dateStr) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    const date = new Date(dateStr);
-    return date.toLocaleDateString("en-GB", options);
+  const handleActiveTab = (active) => {
+    setActiveTab(active.id);
   };
 
   const contentMatchPage = (page) => {
     switch (page) {
       case 1:
-        return <Summary match={match} />;
+        return <Main match={match} />;
       case 2:
-        return <Contents match={match} />;
+        return <Summary match={match} />;
       case 3:
+        return <Contents match={match} />;
+      case 4:
+        return <Statistics match={match} />;
+      case 5:
         return <Comments match={match} />;
       default:
-        return navigate(`/match/${match_id}/${league_id}`);
+        return navigate(`/match/${match_id}`);
     }
   };
 
   useEffect(() => {
-    const { newDate, currentDate } = getCurrentDateWith12HoursAdded();
     const fetchData = async () => {
       try {
-        const response = await ApiServer.getEventsData(
-          currentDate,
-          newDate,
-          league_id
-        );
-        if (response) {
-          const filterMatch = response?.find(
-            (item) => item.match_id === match_id
-          );
-          setMatch(filterMatch);
-          console.log(filterMatch);
-        }
+        const response = await ApiServer.getMatchData(match_id);
+        setMatch(response[0]);
+        console.log(response[0]);
       } catch (error) {
         console.log(error);
       } finally {
@@ -84,12 +62,7 @@ const Match = () => {
     };
     fetchData();
     window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("match", JSON.stringify(match));
-  }, [match_id, league_id, match]);
-
+  }, [match_id]);
 
   if (loading) {
     return (
@@ -98,15 +71,16 @@ const Match = () => {
       </div>
     );
   }
+  if (match.length < 0) {
+    return (
+      <div className="h-screen col-span-3 w-full flex justify-center items-center">
+        Bunday o'yin mavjud emas
+      </div>
+    );
+  }
   return (
-    <main className="max-sm:w-full w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[100px]  gap-3">
-      <section className="w-full flex justify-center items-start flex-col bg-[#333333] p-4 sm:rounded-[12px]">
-        <h1 className="w-full text-center text-white font-bold clamp3">
-          {match?.league_name}
-        </h1>
-        <h1 className="w-full text-center text-white font-[500] clamp4">
-          {formatDate(match?.match_date)}
-        </h1>
+    <main className="w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[88px]  gap-3">
+      <section className="w-full flex justify-center items-start flex-col py-4">
         <div className="w-full grid grid-cols-3 gap-4">
           <div className="flex max-md:flex-col-reverse max-md:justify-between justify-end items-center gap-3">
             <h1 className="text-white font-[700] clamp3">
@@ -121,18 +95,41 @@ const Match = () => {
               />
             </div>
           </div>
-          <div className="text-white font-bold flex justify-center items-center clamp2 gap-2">
-            {!match?.match_hometeam_score && !match?.match_awayteam_score ? (
-              <h1 className="clamp2 text-white font-bold">
-                {match?.match_time}
-              </h1>
-            ) : (
-              <>
-                <h1>{match?.match_hometeam_score}</h1>
-                <p>-</p>
-                <h1>{match?.match_awayteam_score}</h1>
-              </>
-            )}
+          <div className="flex justify-center items-center text-center">
+            <div>
+              {match?.match_hometeam_score && match?.match_awayteam_score && (
+                <h1 className="px-2 py-1 rounded-md clamp1 text-primary  font-bold">
+                  {match?.match_hometeam_score} : {match?.match_awayteam_score}
+                </h1>
+              )}
+              {match?.match_status === "" ? (
+                <h1 className="px-2 py-1 rounded-md clamp1 font-bold text-primary">
+                  <span>VS</span>
+                </h1>
+              ) : match?.match_status === "Finished" ? (
+                <div className="flex justify-center items-center gap-1">
+                  <GiWhistle className="text-thin" />
+                  <h1 className="text-[10px] text-thin">Yakunlangan</h1>
+                </div>
+              ) : match?.match_status === "Cancelled" ? (
+                <div className="flex justify-center items-center gap-1">
+                  <FaWindowClose className="text-thin" />
+                  <h1 className="text-[12px] text-thin">Bekor qilingan</h1>
+                </div>
+              ) : match?.match_status === "Postponed" ? (
+                <div className="flex justify-center items-center gap-1">
+                  <IoTimerOutline className="text-thin" />
+                  <h1 className="text-[12px] text-thin">Kechiktirilgan</h1>
+                </div>
+              ) : (
+                <div className="flex justify-center items-center gap-1">
+                  <MdOutlineTimer className="text-green-600 text-[12px]" />
+                  <h1 className="text-[12px] text-thin">
+                    {match?.match_status}'
+                  </h1>
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex max-md:flex-col max-md:justify-between justify-start items-center gap-3">
             <div className="w-[60px] md:w-[100px] h-[60px] md:h-[70px]">
@@ -147,7 +144,31 @@ const Match = () => {
             </h1>
           </div>
         </div>
-        <div className="w-full h-[1px] bg-thin my-[20px]"></div>
+        {/* info   */}
+        <div className="p-2 bg-secondaryBg-dark rounded-md w-full flex flex-col gap-2 mb-2 mt-4">
+          <div className="flex justify-start items-center gap-2">
+            <MdOutlineStadium className="text-primary clamp3" />
+            <h1 className="clamp4 text-white">{match?.match_stadium}</h1>
+          </div>
+          <div className="flex justify-start items-center gap-2">
+            <GiWhistle className="text-primary clamp3" />
+            <h1 className="clamp4 text-white">{match?.match_referee}</h1>
+          </div>
+          <div className="flex justify-start items-center gap-2">
+            <GiTrophyCup className="text-primary clamp3" />
+            <h1 className="clamp4 text-white">{match?.league_name}</h1>
+          </div>
+          <div className="flex justify-start items-center gap-2">
+            <FaCalendarDays className="text-primary clamp3" />
+            <h1 className="clamp4 text-white">{match?.league_year}</h1>
+          </div>
+          <div className="flex justify-start items-center gap-2">
+            <IoFootball className="text-primary clamp3" />
+            <h1 className="clamp4 text-white">{match?.match_round} - tur</h1>
+          </div>
+        </div>
+        {/* Goals list */}
+       
         {/* desktop */}
         <div className="flex justify-between sm:justify-around items-center w-full gap-4 max-sm:hidden">
           <div className="flex flex-col justify-start gap-2 items-start">
@@ -219,14 +240,14 @@ const Match = () => {
               <div key={idx} className="w-full h-full">
                 <div className="flex justify-between items-center gap-3 w-full">
                   {/* Home Scorers */}
-                  <div className="flex justify-start items-center gap-2">
+                  <div className="clamp4 flex justify-start items-center gap-2">
                     {item?.home_scorer && (
                       <>
                         <p className="text-white font-bold">
                           {item?.home_scorer}
                         </p>
                         <img
-                          className="w-[20px] h-[20px]"
+                          className="w-[16px] h-[16px]"
                           src={goalsvg}
                           alt="goal"
                         />
@@ -235,7 +256,7 @@ const Match = () => {
                           <div className="flex items-center gap-2">
                             <p className="text-thin">{item?.home_assist}</p>
                             <img
-                              className="w-[20px] h-[20px]"
+                              className="w-[16px] h-[16px]"
                               src={assissvg}
                               alt="assist"
                             />
@@ -246,11 +267,11 @@ const Match = () => {
                   </div>
 
                   {/* Away Scorers */}
-                  <div className="flex justify-end items-center gap-2">
+                  <div className="clamp4 flex justify-end items-center gap-2">
                     {item?.away_assist && (
                       <div className="flex items-center gap-2">
                         <img
-                          className="w-[20px] h-[20px]"
+                          className="w-[16px] h-[16px]"
                           src={assissvg}
                           alt="assist"
                         />
@@ -261,7 +282,7 @@ const Match = () => {
                       <>
                         <p className="text-white font-[500]">{item?.time}'</p>
                         <img
-                          className="w-[20px] h-[20px]"
+                          className="w-[16px] h-[16px]"
                           src={goalsvg}
                           alt="goal"
                         />
@@ -278,18 +299,20 @@ const Match = () => {
         </div>
       </section>
       <section className="flex flex-col justify-start items-start gap-[14px]">
-        <div className="px-[16px] w-full flex items-center gap-[20px] ">
+        <div className="no-scroll w-full overflow-x-scroll whitespace-nowrap gap-[20px] ">
           {matchEventsData.map((item, idx) => (
             <button
               onClick={() => handleActiveTab(item)}
               key={idx}
-              className={`text-white rounded-[6px] cursor-pointer relative py-[8px] flex justify-end items-end gap-[px]`}
+              className={`text-white rounded-[12px] cursor-pointer relative inline-flex justify-end items-end px-2 border-[1px] border-primary mr-[6px]`}
             >
-              <h1 className="font-bold clamp3 relative z-10">{item?.title}</h1>
+              <h1 className="font-bold text-[14px] relative z-10">
+                {item?.title}
+              </h1>
               {activeTab === item.id && (
                 <motion.div
                   layoutId="active-pill"
-                  className="h-[5px] absolute inset-0 bg-[#7F00FF] mt-[40px] mx-auto"
+                  className="absolute inset-0 bg-[#7F00FF] w-full mx-auto rounded-[12px]"
                 />
               )}
             </button>

@@ -58,6 +58,7 @@ const Settings = () => {
     } else {
       navigate("/");
     }
+    window.scrollTo(0, 0);
   }, [token]);
 
   return (

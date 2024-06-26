@@ -51,7 +51,7 @@ const Navbar = () => {
             Futzone
           </h1>
         </NavLink>
-        <div className="hidden md:flex text-gray-800 gap-8">
+        <div className="hidden md:flex text-gray-800 gap-4">
           {navLinkData.map((item, idx) => (
             <NavLink
               to={item.link}

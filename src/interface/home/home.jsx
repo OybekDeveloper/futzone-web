@@ -7,56 +7,39 @@ import { ApiServer } from "../../components/api.services";
 import Loader from "../../components/loader/loader";
 
 const Home = () => {
-  const [leagueData, setLeagueData] = useState([]);
+  const [matchesData, setMatchesData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [news, setNews] = useState([]);
   const [error, setError] = useState(null);
 
-  const getCurrentDateWith12HoursAdded = () => {
+  const getAdjustedDates = () => {
     const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
 
-    const currentDate = `${year}-${month}-${day}`;
+    // Subtract 8 hours from the current time
+    const earlierDate = new Date(now);
+    earlierDate.setHours(earlierDate.getHours() - 8);
+    const earlierYear = earlierDate.getFullYear();
+    const earlierMonth = String(earlierDate.getMonth() + 1).padStart(2, "0");
+    const earlierDay = String(earlierDate.getDate()).padStart(2, "0");
+    const earlierDateString = `${earlierYear}-${earlierMonth}-${earlierDay}`;
 
-    now.setHours(now.getHours() + 12);
+    // Add 12 hours to the current time
+    const laterDate = new Date(now);
+    laterDate.setHours(laterDate.getHours() + 12);
+    const laterYear = laterDate.getFullYear();
+    const laterMonth = String(laterDate.getMonth() + 1).padStart(2, "0");
+    const laterDay = String(laterDate.getDate()).padStart(2, "0");
+    const laterDateString = `${laterYear}-${laterMonth}-${laterDay}`;
 
-    const newYear = now.getFullYear();
-    const newMonth = String(now.getMonth() + 1).padStart(2, "0");
-    const newDay = String(now.getDate()).padStart(2, "0");
-    const newDate = `${newYear}-${newMonth}-${newDay}`;
-
-    return { newDate, currentDate };
-  };
-
-  const organizeLeagueMatches = (matches) => {
-    const leagueMap = new Map();
-
-    matches.forEach((match) => {
-      if (!leagueMap.has(match.league_id)) {
-        leagueMap.set(match.league_id, {
-          country_id: match.country_id,
-          country_logo: match.country_logo,
-          country_name: match.country_name,
-          league_id: match.league_id,
-          league_name: match.league_name,
-          league_logo: match.league_logo,
-          matches: [],
-        });
-      }
-      leagueMap.get(match.league_id).matches.push(match);
-    });
-
-    return Array.from(leagueMap.values());
+    return { earlierDateString, laterDateString };
   };
 
   const fetchLeagueData = async (liga_id) => {
-    const { newDate, currentDate } = getCurrentDateWith12HoursAdded();
+    const { earlierDateString, laterDateString } = getAdjustedDates();
     try {
       const response = await ApiServer.getEventsData(
-        currentDate,
-        newDate,
+        earlierDateString,
+        laterDateString,
         liga_id
       );
       if (response.length > 0) {
@@ -82,7 +65,7 @@ const Home = () => {
       setError("Failed to fetch all league data");
     }
   };
-  
+
   const getInitials = (name) => {
     return name
       .split(" ")
@@ -115,8 +98,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const data = await getAllLeagueData();
-        const organizedData = organizeLeagueMatches(data);
-        setLeagueData(organizedData);
+        setMatchesData(data);
         const res = await axios({
           method: "GET",
           url: `https://sws-news.uz/api/v1/news-all`,
@@ -151,7 +133,7 @@ const Home = () => {
       <Matches
         extractTime={extractTime}
         news={news}
-        leagueData={leagueData}
+        matchesData={matchesData}
         addHoursToTime={addHoursToTime}
         getInitials={getInitials}
       />

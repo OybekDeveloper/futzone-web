@@ -27,6 +27,7 @@ import { BiSupport } from "react-icons/bi";
 import { IoPhonePortraitOutline } from "react-icons/io5";
 import { FaInstagram } from "react-icons/fa";
 import { AiFillYoutube } from "react-icons/ai";
+import { GoShield } from "react-icons/go";
 
 export const SoccerLeagues = [
   { id: 30, liga_id: "1", name: "euro" },
@@ -118,10 +119,18 @@ export const matchEventsData = [
   },
   {
     id: 2,
-    title: "Tarkiblar",
+    title: "Voqealar",
   },
   {
     id: 3,
+    title: "Tarkiblar",
+  },
+  {
+    id: 4,
+    title: "Statistika",
+  },
+  {
+    id: 5,
     title: "Comment",
   },
 ];
@@ -138,17 +147,6 @@ export const leagueEventsData = [
 
 export const socialMedias = [
   { name: "Telegram", url: "https://t.me/futzoneuz", icon: <FaTelegram /> },
-  { name: "Bot", url: "https://t.me/futzone_bot", icon: <RiRobot2Fill /> },
-  {
-    name: "Support Bot",
-    url: "https://t.me/Futzone_SupportBot",
-    icon: <BiSupport />,
-  },
-  {
-    name: "App",
-    url: "https://futzone.uz/apps",
-    icon: <IoPhonePortraitOutline />,
-  },
   {
     name: "Instagram",
     url: "https://www.instagram.com/futzone.uz",
@@ -158,5 +156,25 @@ export const socialMedias = [
     name: "YouTube",
     url: "https://www.youtube.com/@futzoneuz",
     icon: <AiFillYoutube />,
+  },
+];
+export const SupportData = [
+  { name: "Bot", url: "https://t.me/futzone_bot", icon: <RiRobot2Fill /> },
+  {
+    name: "Support Bot",
+    url: "https://t.me/Futzone_SupportBot",
+    icon: <BiSupport />,
+  },
+  {
+    name: "Maxfiylik & xavfsizlik",
+    url: "/privacy-policy",
+    icon: <GoShield />,
+  },
+];
+export const AppData = [
+  {
+    name: "App",
+    url: "https://futzone.uz/apps",
+    icon: <IoPhonePortraitOutline />,
   },
 ];
