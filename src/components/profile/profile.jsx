@@ -71,10 +71,10 @@ export default function Profile({ handleClose }) {
           </div>
 
           <h1 className="clamp4 text-thin">
-            {profile?.username.length > 7
+            {profile?.username?.length > 7
               ? profile.username.slice(0, 7)+"..."
               : profile.username}
-          </h1>dsafa
+          </h1>
           <ChevronDownIcon className="size-4 fill-white/60" />
         </MenuButton>
         <Transition
