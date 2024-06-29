@@ -34,6 +34,7 @@ import exit from './exit.svg'
 import close from './close.svg'
 import mobiletest from './photo_2024-06-23_11-42-16.jpg'
 import changesplayer from './changes-player.png'
+import goalSection from './soccer-ball-variant_33736.png'
 export {
   logo,
   rigtharrow,
@@ -70,5 +71,6 @@ export {
   exit,
   close,
   mobiletest,
-  changesplayer
+  changesplayer,
+  goalSection
 };

@@ -37,11 +37,11 @@ const Footer = () => {
             {navLinkData.map((item, idx) => (
               <NavLink
                 to={item.link}
-                className="inline-flex whitespace-nowrap text-thin cursor-pointer px-2 py-2 rounded-lg hover:text-primary transition-all duration-300 justify-start gap-4"
+                className="inline-flex whitespace-nowrap text-thin cursor-pointer px-2 py-2 rounded-lg hover:text-primary transition-all duration-300 justify-start gap-2"
                 key={idx}
               >
+                <div className=" clamp3 gap-1">{item.icon}</div>
                 <h1>{item.title}</h1>
-                <div>|</div>
               </NavLink>
             ))}
           </div>
@@ -55,7 +55,7 @@ const Footer = () => {
                   "inline-flex whitespace-nowrap justify-center items-center  px-2 py-2 rounded-lg text-thin hover:text-primary transition-all duration-300 gap-2"
                 }
               >
-                <div className=" clamp3 gap-1 ">{item.icon}</div>
+                <div className=" clamp3 gap-1">{item.icon}</div>
                 <h1 className="">{item.name}</h1>
               </NavLink>
             ))}
@@ -70,7 +70,7 @@ const Footer = () => {
                   "inline-flex whitespace-nowrap justify-center items-center  px-2 py-2 rounded-lg text-thin hover:text-primary transition-all duration-300 gap-2"
                 }
               >
-                <div className=" clamp3 gap-1 ">{item.icon}</div>
+                <div className=" clamp3 gap-1">{item.icon}</div>
                 <h1 className="">{item.name}</h1>
               </NavLink>
             ))}

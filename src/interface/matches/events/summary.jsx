@@ -1,6 +1,9 @@
 import {
+  assissvg,
   changesplayer,
   emptyclub,
+  goalSection,
+  goalsvg,
   redcard,
   yellowcard,
   yellowredcard,
@@ -21,6 +24,79 @@ const Summary = ({ match }) => {
   }
   return (
     <main className="flex flex-col justify-start items-start gap-[12px]">
+      {/* Gollar */}
+      <section className="bg-secondaryBg-dark p-4 rounded-[12px] w-full h-full">
+        <div className="flex justify-start items-center gap-3">
+          <div className="w-[24px] h-[24px] rounded-full bg-white">
+            <img className="w-full h-full" src={goalSection} alt="" />
+          </div>
+          <h1 className="text-white clamp3 font-bold">Gollar</h1>
+        </div>
+        <div className="w-full h-[2px] bg-navbar my-[10px]"></div>
+        <div className="flex justify-between sm:justify-around items-center w-full gap-4">
+          <div className="flex flex-col justify-start gap-2 items-start w-full">
+            {match?.goalscorer?.map((item, idx) => (
+              <div key={idx} className="w-full h-full">
+                <div className="flex justify-between items-center gap-3 w-full">
+                  {/* Home Scorers */}
+                  <div className="clamp4 flex justify-start items-center gap-2">
+                    {item?.home_scorer && (
+                      <>
+                        <p className="text-white font-bold">
+                          {item?.home_scorer}
+                        </p>
+                        <img
+                          className="w-[16px] h-[16px]"
+                          src={goalsvg}
+                          alt="goal"
+                        />
+                        <p className="text-white font-[500]">{item?.time}'</p>
+                        {item?.home_assist && (
+                          <div className="flex items-center gap-2">
+                            <p className="text-thin">{item?.home_assist}</p>
+                            <img
+                              className="w-[16px] h-[16px]"
+                              src={assissvg}
+                              alt="assist"
+                            />
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+
+                  {/* Away Scorers */}
+                  <div className="clamp4 flex justify-end items-center gap-2">
+                    {item?.away_assist && (
+                      <div className="flex items-center gap-2">
+                        <img
+                          className="w-[16px] h-[16px]"
+                          src={assissvg}
+                          alt="assist"
+                        />
+                        <p className="text-thin">{item?.away_assist}</p>
+                      </div>
+                    )}
+                    {item?.away_scorer && (
+                      <>
+                        <p className="text-white font-[500]">{item?.time}'</p>
+                        <img
+                          className="w-[16px] h-[16px]"
+                          src={goalsvg}
+                          alt="goal"
+                        />
+                        <p className="text-white font-bold">
+                          {item?.away_scorer}
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       {/* Ogohlantirishlar */}
       <section className="bg-secondaryBg-dark p-4 rounded-[12px] w-full h-full">
         <div className="flex justify-start items-center gap-3">

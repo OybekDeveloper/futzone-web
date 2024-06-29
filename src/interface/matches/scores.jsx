@@ -133,7 +133,7 @@ const getAdjustedDates = () => {
                 navigate(`/match/${match.match_id}`);
               }}
               key={match.match_id}
-              className="bg-secondaryBg-dark text-white relative w-full grid grid-cols-3 py-2 rounded-[12px] px-3 cursor-pointer gap-3 "
+              className="bg-secondaryBg-dark hover:bg-navbar transition-all duration-300 text-white relative w-full grid grid-cols-3 py-2 rounded-[12px] px-3 cursor-pointer gap-3 "
             >
               <div className="w-full flex justify-between items-center gap-2 col-span-3 text-[14px]">
                 <div className="flex justify-start items-center gap-1">

@@ -103,7 +103,7 @@ const Match = () => {
                 </h1>
               )}
               {match?.match_status === "" ? (
-                <h1 className="px-2 py-1 rounded-md clamp1 font-bold text-primary">
+                <h1 className="px-2 py-1 rounded-md font-bold text-primary">
                   <span>VS</span>
                 </h1>
               ) : match?.match_status === "Finished" ? (
@@ -168,135 +168,6 @@ const Match = () => {
           </div>
         </div>
         {/* Goals list */}
-       
-        {/* desktop */}
-        <div className="flex justify-between sm:justify-around items-center w-full gap-4 max-sm:hidden">
-          <div className="flex flex-col justify-start gap-2 items-start">
-            {match?.goalscorer?.map((item, idx) => {
-              if (!item.home_scorer) {
-                return null;
-              }
-              return (
-                <div key={idx} className="w-full h-full">
-                  <div className="flex justify-start items-center gap-3">
-                    <p className="text-white font-bold flex gap-2 justify-start items-center ">
-                      {item?.home_scorer}
-                    </p>
-                    {item?.home_scorer && (
-                      <img className="w-[20px] h-[20px]" src={goalsvg} alt="" />
-                    )}
-                    {item?.home_scorer && (
-                      <p className="text-white font-[500] text">
-                        {item?.time}'
-                      </p>
-                    )}
-                    <h1 className="text-thin flex justify-start items-center gap-3">
-                      {item?.home_assist}
-                      {item?.home_assist && (
-                        <img
-                          className="w-[20px] h-[20px]"
-                          src={assissvg}
-                          alt="assist"
-                        />
-                      )}
-                    </h1>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div className="flex flex-col justify-end gap-2">
-            {match?.goalscorer?.map((item, idx) => (
-              <div key={idx}>
-                <div className="flex justify-start items-center gap-3">
-                  <p className="text-white font-bold flex gap-2 justify-start items-center ">
-                    {item?.away_scorer}
-                  </p>
-                  {item?.away_scorer && (
-                    <img className="w-[20px] h-[20px]" src={goalsvg} alt="" />
-                  )}
-                  {item?.away_scorer && (
-                    <p className="text-white font-[500] text">{item?.time}'</p>
-                  )}
-                  <h1 className="text-thin flex justify-start items-center gap-3">
-                    {item?.away_assist}
-                    {item?.away_assist && (
-                      <img
-                        className="w-[20px] h-[20px]"
-                        src={assissvg}
-                        alt="assist"
-                      />
-                    )}
-                  </h1>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* mobile */}
-        <div className="sm:hidden flex justify-between sm:justify-around items-center w-full gap-4">
-          <div className="flex flex-col justify-start gap-2 items-start w-full">
-            {match?.goalscorer?.map((item, idx) => (
-              <div key={idx} className="w-full h-full">
-                <div className="flex justify-between items-center gap-3 w-full">
-                  {/* Home Scorers */}
-                  <div className="clamp4 flex justify-start items-center gap-2">
-                    {item?.home_scorer && (
-                      <>
-                        <p className="text-white font-bold">
-                          {item?.home_scorer}
-                        </p>
-                        <img
-                          className="w-[16px] h-[16px]"
-                          src={goalsvg}
-                          alt="goal"
-                        />
-                        <p className="text-white font-[500]">{item?.time}'</p>
-                        {item?.home_assist && (
-                          <div className="flex items-center gap-2">
-                            <p className="text-thin">{item?.home_assist}</p>
-                            <img
-                              className="w-[16px] h-[16px]"
-                              src={assissvg}
-                              alt="assist"
-                            />
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
-
-                  {/* Away Scorers */}
-                  <div className="clamp4 flex justify-end items-center gap-2">
-                    {item?.away_assist && (
-                      <div className="flex items-center gap-2">
-                        <img
-                          className="w-[16px] h-[16px]"
-                          src={assissvg}
-                          alt="assist"
-                        />
-                        <p className="text-thin">{item?.away_assist}</p>
-                      </div>
-                    )}
-                    {item?.away_scorer && (
-                      <>
-                        <p className="text-white font-[500]">{item?.time}'</p>
-                        <img
-                          className="w-[16px] h-[16px]"
-                          src={goalsvg}
-                          alt="goal"
-                        />
-                        <p className="text-white font-bold">
-                          {item?.away_scorer}
-                        </p>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
       <section className="flex flex-col justify-start items-start gap-[14px] relative">
         <div className="sticky top-[88px] no-scroll w-full overflow-x-scroll whitespace-nowrap gap-[20px] bg-primaryBg-dark py-2 z-[40]">
@@ -304,9 +175,9 @@ const Match = () => {
             <button
               onClick={() => handleActiveTab(item)}
               key={idx}
-              className={`text-white rounded-[12px] cursor-pointer relative inline-flex justify-end items-end px-2 border-[1px] border-primary mr-[6px]`}
+              className={`text-white rounded-[14px] cursor-pointer relative inline-flex justify-end items-end px-3 border-[1px] border-primary mr-[6px]`}
             >
-              <h1 className="font-bold text-[14px] relative z-10">
+              <h1 className="font-bold text-[14px] md:clamp4 relative z-10">
                 {item?.title}
               </h1>
               {activeTab === item.id && (

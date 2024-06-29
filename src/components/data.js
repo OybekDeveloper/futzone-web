@@ -28,6 +28,11 @@ import { IoPhonePortraitOutline } from "react-icons/io5";
 import { FaInstagram } from "react-icons/fa";
 import { AiFillYoutube } from "react-icons/ai";
 import { GoShield } from "react-icons/go";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoNewspaperOutline } from "react-icons/io5";
+import { RiFootballLine } from "react-icons/ri";
+import { GiTrophyCup } from "react-icons/gi";
+import { PiTelevisionSimpleBold } from "react-icons/pi";
 
 export const SoccerLeagues = [
   { id: 30, liga_id: "1", name: "euro" },
@@ -77,26 +82,31 @@ export const navLinkData = [
     id: 1,
     title: "Asosiy",
     link: "/",
+    icon: <AiOutlineHome />,
   },
   {
     id: 2,
     title: "Yangiliklar",
     link: "/news",
+    icon: <IoNewspaperOutline />,
   },
   {
     id: 3,
     title: "O’yinlar",
     link: "/matches",
+    icon: <RiFootballLine />,
   },
   {
     id: 4,
     title: "Ligalar",
     link: "/leagues",
+    icon: <GiTrophyCup />,
   },
   {
     id: 5,
     title: "Futzone TV",
     link: "/futzone-tv",
+    icon: <PiTelevisionSimpleBold />,
   },
 ];
 
