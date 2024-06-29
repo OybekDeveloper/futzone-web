@@ -62,7 +62,7 @@ export default function Profile({ handleClose }) {
             <img
               className="w-full h-full"
               src={
-                profile.photo_url?.includes("https")
+                profile.photo_url?.includes("jpg")
                   ? `https://sws-news.uz/api/v1/files/${profile.photo_url}`
                   : userlogo
               }
@@ -70,7 +70,11 @@ export default function Profile({ handleClose }) {
             />
           </div>
 
-          <h1 className="clamp4 text-thin">{profile?.username}</h1>
+          <h1 className="clamp4 text-thin">
+            {profile?.username.length > 7
+              ? profile.username.slice(0, 7)+"..."
+              : profile.username}
+          </h1>dsafa
           <ChevronDownIcon className="size-4 fill-white/60" />
         </MenuButton>
         <Transition
