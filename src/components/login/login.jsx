@@ -3,8 +3,12 @@ import { backgroundlogin } from "../../images";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { authErrorSlice } from "../../reducer/redux";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const { authError } = useSelector((state) => state.event);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
@@ -31,16 +35,21 @@ const Login = () => {
           url: "https://sws-news.uz/api/v1/user/login",
           data: formData,
         });
-        if (res.data) {
+        console.log(res);
+        if (res.status !== 299) {
           toast.success("Tizimga muvoffaqiyatli kirdingiz!", { id: toastId });
           localStorage.setItem("token", res.data.token);
           navigate("/");
+        } else {
+          const newErrors = {};
+          toast.error("Tizimga kirishda xatolik, qaytadan urinib ko'ring.", {
+            id: toastId,
+          });
+          newErrors["error"] = res?.data?.message;
+          dispatch(authErrorSlice(newErrors));
         }
       } catch (error) {
         console.log(error);
-        toast.error("Tizimga kirishda xatolik, qaytadan urinib ko'ring.", {
-          id: toastId,
-        });
       }
     };
     fetchData();
@@ -75,10 +84,21 @@ const Login = () => {
               }
               value={formData.username}
               placeholder="Username , Telefon raqam"
-              className="w-full bg-transparent border-[#646464] border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] focus:border-primary text-white transition-all ease-linear duration-[0.4]"
+              className={`${
+                authError?.error === "userNotFoundUsingPhoneOrUsername"
+                  ? "border-red-600"
+                  : "border-[#646464] focus:border-primary"
+              } w-full bg-transparent border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] text-white transition-all ease-linear duration-[0.4]`}
               type="text"
               id="username"
             />
+            {authError?.error === "userNotFoundUsingPhoneOrUsername" && (
+              <div>
+                <h1 className="clamp4 text-red-600">
+                  Username yoki telefon raqam noto'g'ri
+                </h1>
+              </div>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="password" className="clamp4 text-thin font-bold">
@@ -87,12 +107,19 @@ const Login = () => {
             <input
               onChange={handleChange}
               value={formData.password}
-              className="w-full bg-transparent border-[#646464] border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] focus:border-primary text-white transition-all ease-linear duration-[0.4]"
+              className={`${ 
+                authError?.error === "incorrectPassword"?"border-red-600":"border-[#646464] focus:border-primary"
+              } w-full bg-transparent border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] text-white transition-all ease-linear duration-[0.4]`}
               type="password"
               name="password"
               placeholder="Parol"
               id="password"
             />
+            {authError?.error === "incorrectPassword" && (
+              <div>
+                <h1 className="clamp4 text-red-600">Parol noto'g'ri</h1>
+              </div>
+            )}
           </div>
           <button
             onClick={handleSubmit}

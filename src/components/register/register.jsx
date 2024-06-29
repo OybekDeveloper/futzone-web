@@ -3,16 +3,18 @@ import { backgroundlogin } from "../../images";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { authErrorSlice } from "../../reducer/redux";
 
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { authError } = useSelector((state) => state.event);
   const [formData, setFormData] = useState({
     fullname: "",
     username: "",
-    photo: "",
     phone: "",
     password: "",
-    club_badge: "",
   });
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -26,9 +28,20 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const newErrors = {};
+    Object.keys(formData).forEach((key) => {
+      if (!formData[key]) {
+        newErrors[key] = `${key} bo'sh bo'lishi shart`;
+      }
+    });
+    if (Object.keys(newErrors).length > 0) {
+      dispatch(authErrorSlice(newErrors));
+      return;
+    }
+
     const fetchData = async () => {
       const toastId = toast.loading("Tizimga kirilmoqda...");
-
       try {
         const res = await axios({
           method: "POST",
@@ -42,10 +55,17 @@ const Register = () => {
             club_badge: "photo",
           },
         });
-        if (res.data) {
-          toast.success("Tizimga muvoffaqiyatli kirdingiz!", { id: toastId });
+        console.log(res);
+        if (res.status !== 299) {
+          toast.success("Muvofaqiyatli ro'yxatdan o'tdingiz!", { id: toastId });
           localStorage.setItem("token", res.data.token);
           navigate("/");
+        } else {
+          toast.error("Tizimga kirishda xatolik, qaytadan urinib ko'ring.", {
+            id: toastId,
+          });
+          newErrors["error"] = res?.data?.message;
+          dispatch(authErrorSlice(newErrors));
         }
       } catch (error) {
         console.log(error);
@@ -96,7 +116,7 @@ const Register = () => {
 
   return (
     <div className="grid md:grid-cols-2 grid-cols-1 h-full">
-      <div className="relative w-10/12 flex flex-col mx-auto justify-center items-center md:max-w-[350px] gap-[12px]">
+      <div className="relative w-10/12 flex flex-col mx-auto justify-center items-center max-w-[350px] gap-[12px]">
         <h1 className="clamp2 font-bold text-white">Ro'yxatdan o'tish</h1>
         <p className="text-thin text-center">
           Ro'yxatdan o'tish uchun quyidagi ma'lumotlarni to'ldiring
@@ -111,11 +131,20 @@ const Register = () => {
             </label>
             <input
               onChange={handleChange}
-              className="w-full bg-transparent border-[#646464] border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] focus:border-primary text-white transition-all ease-linear duration-[0.4]"
+              className={`${
+                authError?.fullname
+                  ? "border-red-600"
+                  : "border-[#646464] focus:border-primary"
+              } w-full bg-transparent border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] text-white transition-all ease-linear duration-[0.4]`}
               type="text"
               id="fullname"
               name="fullname"
             />
+            {authError?.fullname && (
+              <div>
+                <h1 className="clamp4 text-red-600">{authError?.fullname}</h1>
+              </div>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="username" className="clamp4 text-thin font-bold">
@@ -123,11 +152,28 @@ const Register = () => {
             </label>
             <input
               onChange={handleChange}
-              className="w-full bg-transparent border-[#646464] border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] focus:border-primary text-white transition-all ease-linear duration-[0.4]"
+              className={`${
+                authError?.username ||
+                authError?.error === "usernameAlreadyRegistered"
+                  ? "border-red-600"
+                  : "border-[#646464] focus:border-primary"
+              } w-full bg-transparent border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] text-white transition-all ease-linear duration-[0.4]`}
               type="text"
               id="username"
               name="username"
             />
+            {authError?.username && (
+              <div>
+                <h1 className="clamp4 text-red-600">{authError?.username}</h1>
+              </div>
+            )}
+            {authError?.error === "usernameAlreadyRegistered" && (
+              <div>
+                <h1 className="clamp4 text-red-600">
+                  Bunday username allaqachon mavjud
+                </h1>
+              </div>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="phone" className="clamp4 text-thin font-bold">
@@ -137,11 +183,28 @@ const Register = () => {
               onFocus={handleInputFocus}
               onChange={handleInputChange}
               value={phoneNumber}
-              className="w-full bg-transparent border-[#646464] border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] focus:border-primary text-white transition-all ease-linear duration-[0.4]"
+              className={`${
+                authError?.phone ||
+                authError?.error === "phoneAlreadyRegistered"
+                  ? "border-red-600"
+                  : "border-[#646464] focus:border-primary"
+              }  w-full bg-transparent  border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px]  text-white transition-all ease-linear duration-[0.4]`}
               type="text"
               id="phone"
               name="phone"
             />
+            {authError?.phone && (
+              <div>
+                <h1 className="clamp4 text-red-600">{authError?.phone}</h1>
+              </div>
+            )}
+            {authError?.error === "phoneAlreadyRegistered" && (
+              <div>
+                <h1 className="clamp4 text-red-600">
+                  Bunday username allaqachon mavjud
+                </h1>
+              </div>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="password" className="clamp4 text-thin font-bold">
@@ -149,11 +212,20 @@ const Register = () => {
             </label>
             <input
               onChange={handleChange}
-              className="w-full bg-transparent border-[#646464] border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px] focus:border-primary text-white transition-all ease-linear duration-[0.4]"
+              className={`${
+                authError?.password
+                  ? "border-red-600"
+                  : "border-[#646464] focus:border-primary"
+              } w-full bg-transparent  border-[1px] bg-[#3d3d3d] outline-none px-[8px] py-[8px] rounded-[6px]  text-white transition-all ease-linear duration-[0.4]`}
               type="password"
               id="password"
               name="password"
             />
+            {authError?.password && (
+              <div>
+                <h1 className="clamp4 text-red-600">{authError?.password}</h1>
+              </div>
+            )}
           </div>
           <button
             type="submit"

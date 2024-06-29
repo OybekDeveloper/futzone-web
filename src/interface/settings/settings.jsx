@@ -59,7 +59,7 @@ const Settings = () => {
       navigate("/");
     }
     window.scrollTo(0, 0);
-  }, [token]);
+  }, [token,isEdit]);
 
   return (
     <div className="max-sm:w-full w-11/12 max-w-[1440px] mx-auto min-h-[calc(100vh-88px)] mt-[120px] flex justify-center items-start ">
@@ -70,11 +70,12 @@ const Settings = () => {
           <div className="photo-container relative w-[100px] h-[100px] mx-auto flex justify-center items-center border-[2px] border-solid border-primary rounded-full overflow-hidden">
             <img
               src={
-                profile.photo_url?.includes("https")
+                profile.photo_url?.includes("jpg")
                   ? `https://sws-news.uz/api/v1/files/${profile.photo_url}`
                   : userlogosecondary
               }
               alt=""
+              className="w-full h-full object-cover"
             />
           </div>
           <h1 className="text-thin clamp2 text-center font-bold my-3">

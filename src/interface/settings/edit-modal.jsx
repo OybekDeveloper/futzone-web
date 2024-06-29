@@ -10,6 +10,7 @@ import { useState, useEffect, useRef } from "react";
 import { MdOutlinePhotoCamera } from "react-icons/md";
 import { userlogosecondary } from "../../images";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function EditModal({ profile, isOpen, handleClose }) {
   const fileInputRef = useRef(null);
@@ -30,41 +31,51 @@ export default function EditModal({ profile, isOpen, handleClose }) {
         phone: profile.phone_number,
         photo: profile.photo_url,
         password: profile.password,
-        club_badge: profile.club_badge,
+        club_badge: "string",
       });
     }
   }, [profile]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    setFormData({
+      ...formData,
       [name]: value,
-    }));
+    });
   };
+  console.log(formData);
 
   const handleCancel = () => {
     handleClose();
+    setUploadPhoto();
     if (profile) {
-      setTimeout(() => {
-        setFormData({
-          fullname: profile.fullname,
-          username: profile.username,
-          phone: profile.phone_number,
-          password: profile.password,
-        });
-      }, 200);
+      setFormData({
+        fullname: profile.fullname,
+        username: profile.username,
+        phone: profile.phone_number,
+        password: profile.password,
+        club_badge: "string",
+      });
     }
   };
 
   const handleSubmit = () => {
     const fetchData = async () => {
       try {
-        await axios({
-          method: "POST",
-          url: "https://sws-news.uz/api/v1/user/update",
+        const res = await axios({
+          method: "PUT",
+          url: "https://sws-news.uz/api/v1/user",
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+          },
           data: JSON.stringify(formData),
         });
+        if(res?.data?.message==="userUpdatedSuccessfully"){
+          handleClose();
+          toast.success("Muvofaqiyatli o'zgartirildi!")
+        }
       } catch (error) {
         console.log(error);
       }
@@ -74,20 +85,24 @@ export default function EditModal({ profile, isOpen, handleClose }) {
 
   const handleUploadPhoto = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     if (file) {
       const newFile = new FormData();
       newFile.append("file", file);
       const fetchData = async () => {
         try {
-          await axios({
+          const res = await axios({
             method: "POST",
             url: "https://sws-news.uz/api/v1/files/upload",
             headers: {
               "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${token}`,
+              Authorization: `${token}`,
             },
             data: newFile,
+          });
+          setUploadPhoto(res?.data);
+          setFormData({
+            ...formData,
+            photo: res?.data,
           });
           // Optionally, you can update the profile photo URL here by calling a function or updating the state.
         } catch (error) {
@@ -104,13 +119,18 @@ export default function EditModal({ profile, isOpen, handleClose }) {
     }
   };
 
+  console.log(formData, profile);
+
   return (
     <Transition appear show={isOpen}>
       <div className="fixed top-0 left-0 w-screen h-screen backdrop-blur-[10px] z-[99]"></div>
       <Dialog
         as="div"
         className="relative z-[100] focus:outline-none"
-        onClose={handleClose}
+        onClose={() => {
+          handleClose();
+          setUploadPhoto(null);
+        }}
       >
         <div className="fixed inset-0 z-[100] w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
@@ -129,7 +149,7 @@ export default function EditModal({ profile, isOpen, handleClose }) {
                       src={
                         uploadPhoto
                           ? `https://sws-news.uz/api/v1/files/${uploadPhoto}`
-                          : profile?.photo_url?.includes("https")
+                          : profile?.photo_url?.includes("jpg")
                           ? `https://sws-news.uz/api/v1/files/${profile.photo_url}`
                           : userlogosecondary
                       }
